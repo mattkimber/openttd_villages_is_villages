@@ -1,2 +1,10 @@
 STR_POP_LIMIT	:Population limit: {ORANGE}{NUM} {}
 STR_CITY_NO_POP_LIMIT :No population limit (city) {}
+STR_GROWTH_OUTSTANDING :Growth prospects: {ORANGE}Outstanding {}
+STR_GROWTH_EXCELLENT :Growth prospects: {ORANGE}Excellent {}
+STR_GROWTH_VERYGOOD :Growth prospects: {ORANGE}Very Good {}
+STR_GROWTH_GOOD :Growth prospects: {ORANGE}Good {}
+STR_GROWTH_MEDIOCRE :Growth prospects: {ORANGE}Mediocre {}
+STR_GROWTH_POOR :Growth prospects: {ORANGE}Poor {}
+STR_GROWTH_VERYPOOR :Growth prospects: {ORANGE}Very Poor {}
+STR_GROWTH_NONE :Growth prospects: {RED}None {}

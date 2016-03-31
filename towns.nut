@@ -3,7 +3,22 @@ class Towns {
 
   constructor()
   {
-    Initialise();
+  }
+
+  function InitialiseWithData(townData)
+  {
+    foreach(t in townData)
+    {
+      GSLog.Info("Loading town");
+      local town = Town(t.id);
+      town.InitialiseWithSize(t.max_population);
+      townList.append(town);
+    }
+  }
+
+  function GetTownList()
+  {
+    return this.townList;
   }
 
   function Initialise()
@@ -15,12 +30,13 @@ class Towns {
       if (!GSTown.IsCity(t))
       {
         GSLog.Info("Found town");
-        townList.append(Town(t));
+        local town = Town(t);
+        town.Initialise();
+        townList.append(town);
       }
       else
       {
         GSLog.Info("Found city");
-        GSTown.SetText(t, GSText(GSText.STR_CITY_NO_POP_LIMIT));
       }
     }
   }

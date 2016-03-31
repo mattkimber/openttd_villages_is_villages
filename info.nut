@@ -20,7 +20,7 @@ function GetSettings() {
     hard_value = 100,
     custom_value = 100,
     flags = CONFIG_INGAME,
-    min_value = 0,
+    min_value = 50,
     max_value = 5000,
     step_size = 50});
   AddSetting({
@@ -31,10 +31,21 @@ function GetSettings() {
     hard_value = 5000,
     custom_value = 5000,
     flags = CONFIG_INGAME,
-    min_value = 0,
+    min_value = 1000,
     max_value = 25000,
     step_size = 1000});
-    }
+  AddSetting({
+    name = "grow_like_crazy",
+    description = "Towns grow like crazy until limit is reached (debug mode)",
+    easy_value = 0,
+    medium_value = 0,
+    hard_value = 0,
+    custom_value = 0,
+    flags = CONFIG_BOOLEAN});
+  AddLabels("grow_like_crazy", {_0 = "Disabled", _1 = "Enabled"});
+
+
+  }
 }
 
 RegisterGS(VillagesIsVillages());
