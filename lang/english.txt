@@ -1,0 +1,2 @@
+STR_POP_LIMIT	:Population limit: {ORANGE}{NUM} {}
+STR_CITY_NO_POP_LIMIT :No population limit (city) {}
