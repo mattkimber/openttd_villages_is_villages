@@ -46,13 +46,22 @@ function VillagesIsVillages::Start()
     local industry_count = industries.Count();
     local i = 0;
 
-    // We will loop the entire map approximately once per 15 days if there
-    // are sufficient opcodes (2 x 1 tick sleeps between iterations)
-    while(i < town_count / 500 && i < industry_count / 500 && i < 1 && this.GetOpsTillSuspend() > 500)
+    while((i < town_count / 10 || i < 1) && this.GetOpsTillSuspend() > 100)
     {
       towns.ProcessNextTown();
-      industries.ProcessNextIndustry();
       i++;
+    }
+
+    if(GSController.GetSetting("manage_industries")) 
+    {
+      this.Sleep(1);
+      i = 0;
+
+      while((i < industry_count / 10 || i < 1) && this.GetOpsTillSuspend() > 100)
+      {
+        industries.ProcessNextIndustry();
+        i++;
+      }
     }
 
     this.Sleep(1);

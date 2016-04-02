@@ -51,3 +51,11 @@ There are two settings to tune the industry management behaviour:
 Industries which do not produce any output (either non-producing sink industries
 or dormant factories) are considered served if there is a station within their
 vicinity.
+
+== Large Maps ==
+
+If you have more than about 1000 towns or 500 industries on your map, it can
+take a few months of game time for growth statistics to be updated - meaning
+towns may grow and industries open when they shouldn't, or towns may be
+unable to grow when they should be able to. Increasing the number of opcodes
+available to AIs and game scripts can help with this.
