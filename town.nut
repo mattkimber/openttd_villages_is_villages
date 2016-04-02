@@ -2,9 +2,11 @@ class Town
 {
   id = 0;
   max_population = 0;
+  is_city = 0;
 
   constructor(town_id) {
     this.id = town_id;
+    this.is_city = GSTown.IsCity(this.id);
   }
 
   function Initialise() {
@@ -28,6 +30,11 @@ class Town
 
   function GetSize()
   {
+    if(this.is_city)
+    {
+      return 0;
+    }
+
     local min_town_size = GSController.GetSetting("min_town_size");
     local max_town_size = GSController.GetSetting("max_town_size");
 
@@ -43,6 +50,10 @@ class Town
 
   function GetGrowthProspectString(current_population)
   {
+    if(this.is_city) {
+      return GSText(GSText.STR_GROWTH_UNLIMITED);
+    }
+
     local percentage = (this.max_population - current_population) / (max(current_population / 100, 1));
 
     if(percentage > 100) {
@@ -50,7 +61,7 @@ class Town
     }
 
     if(percentage > 60) {
-    return GSText(GSText.STR_GROWTH_EXCELLENT);
+      return GSText(GSText.STR_GROWTH_EXCELLENT);
     }
 
     if(percentage > 30) {

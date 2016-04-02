@@ -1,5 +1,6 @@
 class Towns {
-  townList = [];
+  town_list = [];
+  current_town = 0;
 
   constructor()
   {
@@ -12,13 +13,13 @@ class Towns {
       GSLog.Info("Loading town");
       local town = Town(t.id);
       town.InitialiseWithSize(t.max_population);
-      townList.append(town);
+      town_list.append(town);
     }
   }
 
   function GetTownList()
   {
-    return this.townList;
+    return this.town_list;
   }
 
   function Initialise()
@@ -27,30 +28,22 @@ class Towns {
 
     foreach(t, _ in towns)
     {
-      if (!GSTown.IsCity(t))
-      {
-        GSLog.Info("Found town");
-        local town = Town(t);
-        town.Initialise();
-        townList.append(town);
-      }
-      else
-      {
-        GSLog.Info("Found city");
-      }
+      this.AddTown(t);
     }
   }
 
-  function AddTown()
+  function AddTown(town_id)
   {
-
+    local town = Town(town_id);
+    town.Initialise();
+    town_list.append(town);
   }
 
-  function Process()
+  function ProcessNextTown()
   {
-    foreach(town in townList)
-    {
-      town.Process();
-    }
+    local town = town_list[current_town];
+    town.Process();
+
+    current_town = (current_town + 1) % town_list.len();
   }
 }

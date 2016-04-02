@@ -25,9 +25,22 @@ function VillagesIsVillages::Start()
   }
 
   while (true) {
-    towns.Process();
-    // 2100 ticks ~= 30 days
-    this.Sleep(2100);
+    // Sleep 10 ticks between each loop
+    this.Sleep(10);
+
+    towns.ProcessNextTown();
+
+    // Process any events which happened while we were sleeping
+    while(GSEventController.IsEventWaiting())
+    {
+      local event = GSEventController.GetNextEvent();
+      if(event != null && event.GetEventType() == GSEvent.ET_TOWN_FOUNDED)
+      {
+        local townEvent = GSEventTownFounded.Convert(event);
+        GSLog.Info("New town founded");
+        towns.AddTown(townEvent.GetTownID());
+      }
+    }
   }
 }
 
