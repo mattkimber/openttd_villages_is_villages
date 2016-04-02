@@ -1,9 +1,16 @@
 STR_GROWTH_UNLIMITED :Cities have no growth limit{}
-STR_GROWTH_OUTSTANDING :Growth prospects: {ORANGE}Outstanding {}
-STR_GROWTH_EXCELLENT :Growth prospects: {ORANGE}Excellent {}
-STR_GROWTH_VERYGOOD :Growth prospects: {ORANGE}Very Good {}
-STR_GROWTH_GOOD :Growth prospects: {ORANGE}Good {}
-STR_GROWTH_MEDIOCRE :Growth prospects: {ORANGE}Mediocre {}
-STR_GROWTH_POOR :Growth prospects: {ORANGE}Poor {}
-STR_GROWTH_VERYPOOR :Growth prospects: {ORANGE}Very Poor {}
-STR_GROWTH_NONE :Growth prospects: {RED}None {}
+STR_GROWTH_OUTSTANDING :Growth prospects: {ORANGE}Outstanding{BLACK} {}
+STR_GROWTH_EXCELLENT :Growth prospects: {ORANGE}Excellent{BLACK} {}
+STR_GROWTH_VERYGOOD :Growth prospects: {ORANGE}Very Good{BLACK} {}
+STR_GROWTH_GOOD :Growth prospects: {ORANGE}Good{BLACK} {}
+STR_GROWTH_MEDIOCRE :Growth prospects: {ORANGE}Mediocre{BLACK} {}
+STR_GROWTH_POOR :Growth prospects: {ORANGE}Poor{BLACK} {}
+STR_GROWTH_VERYPOOR :Growth prospects: {ORANGE}Very Poor{BLACK} {}
+STR_GROWTH_NONE :Growth prospects: {RED}None{BLACK} {}
+STR_PASSENGER_SHORTFALL :Passenger shortfall: {RED}{NUM}{BLACK} {}
+STR_MAIL_SHORTFALL :Mail shortfall: {RED}{NUM}{BLACK} {}
+STR_PASSENGER_OK :Passenger shortfall: {ORANGE}{NUM}{BLACK} {}
+STR_MAIL_OK :Mail shortfall: {ORANGE}{NUM}{BLACK}
+STR_CONCAT_2 :{STRING}{STRING}
+STR_CONCAT_3 :{STRING}{STRING1}{STRING1}
+STR_CONCAT_4 :{STRING}{STRING}{STRING}{STRING}

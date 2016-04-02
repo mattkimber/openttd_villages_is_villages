@@ -19,7 +19,7 @@ function GetSettings() {
     medium_value = 250,
     hard_value = 100,
     custom_value = 100,
-    flags = CONFIG_INGAME,
+    flags = 0,
     min_value = 50,
     max_value = 5000,
     step_size = 50});
@@ -30,7 +30,7 @@ function GetSettings() {
     medium_value = 10000,
     hard_value = 5000,
     custom_value = 5000,
-    flags = CONFIG_INGAME,
+    flags = 0,
     min_value = 1000,
     max_value = 25000,
     step_size = 1000});
@@ -43,7 +43,30 @@ function GetSettings() {
     custom_value = 0,
     flags = CONFIG_BOOLEAN});
   AddLabels("grow_like_crazy", {_0 = "Disabled", _1 = "Enabled"});
-
+  AddSetting({
+    name = "min_pax_transported",
+    description = "Percentage of passengers to transport for town to grow"
+    easy_value = 0,
+    medium_value = 25,
+    hard_value = 50,
+    custom_value = 50,
+    flags = CONFIG_INGAME,
+    min_value = 0,
+    max_value = 100,
+    step_size = 5
+  });
+  AddSetting({
+    name = "min_mail_transported",
+    description = "Percentage of mail to transport for town to grow"
+    easy_value = 0,
+    medium_value = 25,
+    hard_value = 50,
+    custom_value = 50,
+    flags = CONFIG_INGAME,
+    min_value = 0,
+    max_value = 100,
+    step_size = 5
+  });
 
   }
 }
