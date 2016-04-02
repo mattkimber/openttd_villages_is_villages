@@ -27,7 +27,7 @@ function GetSettings() {
     name = "max_town_size",
     description = "Maximum size of largest non-city",
     easy_value = 15000,
-    medium_value = 10000,
+    medium_value = 10000,/gam
     hard_value = 5000,
     custom_value = 5000,
     flags = 0,
@@ -99,8 +99,6 @@ function GetSettings() {
       custom_value = 0,
       flags = CONFIG_BOOLEAN});
     AddLabels("grow_like_crazy", {_0 = "Disabled", _1 = "Enabled"});
-
-  }
 }
 
 RegisterGS(VillagesIsVillages());

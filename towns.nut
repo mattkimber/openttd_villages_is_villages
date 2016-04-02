@@ -7,6 +7,11 @@ class Towns
   {
   }
 
+  function Count()
+  {
+    return town_list.len();
+  }
+
   function InitialiseWithData(townData)
   {
     foreach(t in townData)

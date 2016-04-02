@@ -13,6 +13,11 @@ class Industries
 
   }
 
+  function Count()
+  {
+    return industry_list.len();
+  }
+
   function IsIndustrySpawningAllowed()
   {
     // If we have no industries then spawning is allowed by default

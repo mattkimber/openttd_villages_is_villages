@@ -40,10 +40,22 @@ function VillagesIsVillages::Start()
   }
 
   while (true) {
-    this.Sleep(5);
-    towns.ProcessNextTown();
-    this.Sleep(5);
-    industries.ProcessNextIndustry();
+    this.Sleep(1);
+
+    local town_count = towns.Count();
+    local industry_count = industries.Count();
+    local i = 0;
+
+    // We will loop the entire map approximately once per 15 days if there
+    // are sufficient opcodes (2 x 1 tick sleeps between iterations)
+    while(i < town_count / 500 && i < industry_count / 500 && i < 1 && this.GetOpsTillSuspend() > 500)
+    {
+      towns.ProcessNextTown();
+      industries.ProcessNextIndustry();
+      i++;
+    }
+
+    this.Sleep(1);
 
     // Process any events which happened while we were sleeping
     while(GSEventController.IsEventWaiting())
