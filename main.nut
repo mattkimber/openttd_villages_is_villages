@@ -1,5 +1,7 @@
 require("towns.nut");
 require("town.nut");
+require("industries.nut");
+require("industry.nut");
 
 import("util.superlib", "SuperLib", 38);
 Helper <- SuperLib.Helper;
@@ -8,6 +10,7 @@ class VillagesIsVillages extends GSController
 {
   data_loaded = false;
   towns = [];
+  industries = [];
 
   constructor()
   {
@@ -24,11 +27,23 @@ function VillagesIsVillages::Start()
     towns.Initialise();
   }
 
-  while (true) {
-    // Sleep 10 ticks between each loop
-    this.Sleep(10);
+  industries = Industries();
 
+  if(GSController.GetSetting("manage_industries"))
+  {
+    if(!GSGameSettings.IsValid("difficulty.industry_density"))
+    {
+      GSLog.Error("Cannot manage industries - industry funding level setting not found");
+      return;
+    }
+    industries.Initialise();
+  }
+
+  while (true) {
+    this.Sleep(5);
     towns.ProcessNextTown();
+    this.Sleep(5);
+    industries.ProcessNextIndustry();
 
     // Process any events which happened while we were sleeping
     while(GSEventController.IsEventWaiting())

@@ -13,10 +13,11 @@ The town growth rules are changed as follows:
   decide what kind of transport service to provide.
 
 You can configure the minimum amounts of mail and passengers to be transported
-from the town before it can grow. This uses the town statistics on passengers/mail
-last month compared to their maximum value. If the town can produce a maximum of
-100 passengers and you configure 50% as the amount required, then 50 passengers must
-have been transported in the previous month for the town to grow.
+from the town before it can grow. This uses the town statistics on
+passengers/mail last month compared to their maximum value. If the town can
+produce a maximum of 100 passengers and you configure 50% as the amount
+required, then 50 passengers must have been transported in the previous month
+for the town to grow.
 
 If there is a shortfall in the number of passengers or mail required to be
 transported, it will be shown on the town information display.
@@ -28,3 +29,25 @@ If a town has hit its growth limit and you'd like it to be larger:
 * "Fund New Buildings" will permanently increase the population limit to 20%
   above the town's current population for every month where new buildings are
   being funded and the town is already at its population limit.
+
+== Manage Industries ==
+
+This is an experimental feature as it relies on manipulating a game setting
+(the one specifying industry density) in order to control the opening of new
+industries.
+
+Manage Industries will prevent new industries from opening unless a certain
+proportion of those already on the map have service. This prevents the situation
+in long games where the map is completely dominated by industries, without the
+restrictions of running the whole game in "funding only" mode.
+
+There are two settings to tune the industry management behaviour:
+
+* The percentage of cargo which must be transported from a producing industry
+  in order for it to be considered "served"
+* The percentage of industries on the map which must be served before new
+  industries are constructed.
+
+Industries which do not produce any output (either non-producing sink industries
+or dormant factories) are considered served if there is a station within their
+vicinity.

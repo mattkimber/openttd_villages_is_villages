@@ -9,7 +9,7 @@ function GetVersion()		{ return SELF_VERSION; }
 function GetDate()			{ return SELF_DATE; }
 function CreateInstance()	{ return "VillagesIsVillages"; }
 function GetShortName()		{ return "VIsV"; }
-function GetAPIVersion()	{ return "1.5"; }
+function GetAPIVersion()	{ return "1.6"; }
 function GetUrl()			{ return ""; }
 function GetSettings() {
   AddSetting({
@@ -35,15 +35,6 @@ function GetSettings() {
     max_value = 25000,
     step_size = 1000});
   AddSetting({
-    name = "grow_like_crazy",
-    description = "Towns grow like crazy until limit is reached (debug mode)",
-    easy_value = 0,
-    medium_value = 0,
-    hard_value = 0,
-    custom_value = 0,
-    flags = CONFIG_BOOLEAN});
-  AddLabels("grow_like_crazy", {_0 = "Disabled", _1 = "Enabled"});
-  AddSetting({
     name = "min_pax_transported",
     description = "Percentage of passengers to transport for town to grow"
     easy_value = 0,
@@ -67,6 +58,47 @@ function GetSettings() {
     max_value = 100,
     step_size = 5
   });
+  AddSetting({
+    name = "manage_industries",
+    description = "Manage industries (experimental)",
+    easy_value = 0,
+    medium_value = 0,
+    hard_value = 0,
+    custom_value = 0,
+    flags = CONFIG_BOOLEAN});
+  AddSetting({
+      name = "min_cargo_transported",
+      description = "Percentage of cargo to transport from an industry"
+      easy_value = 25,
+      medium_value = 50,
+      hard_value = 75,
+      custom_value = 75,
+      flags = CONFIG_INGAME,
+      min_value = 0,
+      max_value = 100,
+      step_size = 5
+    });
+  AddSetting({
+      name = "min_industries_served",
+      description = "Percentage of industries which must be served"
+      easy_value = 25,
+      medium_value = 50,
+      hard_value = 75,
+      custom_value = 75,
+      flags = CONFIG_INGAME,
+      min_value = 0,
+      max_value = 100,
+      step_size = 5
+    });
+  AddSetting({
+      name = "grow_like_crazy",
+      description = "Towns grow like crazy until limit is reached (debug mode)",
+      easy_value = 0,
+      medium_value = 0,
+      hard_value = 0,
+      custom_value = 0,
+      flags = CONFIG_BOOLEAN});
+    AddLabels("grow_like_crazy", {_0 = "Disabled", _1 = "Enabled"});
 
   }
 }

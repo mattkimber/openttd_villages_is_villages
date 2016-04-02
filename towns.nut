@@ -1,4 +1,5 @@
-class Towns {
+class Towns
+{
   town_list = [];
   current_town = 0;
 
