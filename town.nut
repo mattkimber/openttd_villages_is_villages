@@ -161,7 +161,7 @@ class Town
       this.ProcessDeliveredCargo();
     }
 
-    if(this.CanGrowOnPopulation() && this.CanGrowOnCargo())
+    if(this.CanGrowOnCargo() && this.CanGrowOnPopulation())
     {
       // Always grow the smallest towns to prevent them getting stuck at 0 population
       if(this.current_population == 0)
