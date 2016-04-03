@@ -9,8 +9,8 @@ function GetVersion()		{ return SELF_VERSION; }
 function GetDate()			{ return SELF_DATE; }
 function CreateInstance()	{ return "VillagesIsVillages"; }
 function GetShortName()		{ return "VIsV"; }
-function GetAPIVersion()	{ return "1.6"; }
-function GetUrl()			{ return ""; }
+function GetAPIVersion()	{ return "1.5"; }
+function GetUrl()			{ return "https://github.com/mattkimber/openttd_villages_is_villages"; }
 function GetSettings() {
   AddSetting({
     name = "min_town_size",
