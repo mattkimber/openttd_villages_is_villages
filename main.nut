@@ -2,6 +2,7 @@ require("towns.nut");
 require("town.nut");
 require("industries.nut");
 require("industry.nut");
+require("cargoes.nut");
 
 import("util.superlib", "SuperLib", 38);
 Helper <- SuperLib.Helper;
@@ -9,12 +10,14 @@ Helper <- SuperLib.Helper;
 class VillagesIsVillages extends GSController
 {
   data_loaded = false;
-  towns = [];
-  industries = [];
+  towns = null;
+  industries = null;
+  cargoes = null;
   total_towns_processed = 0;
 
   constructor()
   {
+    cargoes = Cargoes();
   }
 }
 
@@ -24,7 +27,7 @@ function VillagesIsVillages::Start()
 
   if(!data_loaded)
   {
-    towns = Towns();
+    towns = Towns(cargoes);
     towns.Initialise();
   }
 
@@ -111,7 +114,7 @@ function VillagesIsVillages::Load(version, data)
 
   if(data.rawin("towns")) {
     townData = data.rawget("towns");
-    towns = Towns();
+    towns = Towns(cargoes);
     towns.InitialiseWithData(townData);
 
     GSLog.Info("Loaded town data");

@@ -29,6 +29,12 @@ If a town has hit its growth limit and you'd like it to be larger:
 * "Fund New Buildings" will permanently increase the population limit to 20%
   above the town's current population for every month where new buildings are
   being funded and the town is already at its population limit.
+* Delivering goods (or building materials and alcohol if you are using FIRS)
+  will increase the population limit in proportion to the amount delivered,
+  up to a limit of 20% above the town's current population. By default,
+  building materials have the largest impact, with alcohol having the least.
+
+Cargo delivery is checked once per 90 days.
 
 == Manage Industries ==
 
@@ -54,9 +60,12 @@ vicinity.
 
 == Large Maps ==
 
-If you have more than about 1000 towns on your map, it can take a few months
+If you have over 2000 towns on your map, it can take more than a month
 of game time for growth statistics to be updated - meaning towns may grow
-when they shouldn't, or be unable to grow when they should be able to.
+when they shouldn't, or be unable to grow when they should be able to. This
+is most noticeable when first starting or loading a game, as Villages is
+Villages caches results to improve subsequent runs through the town processing
+loop.
 
 You can reduce the amount of time each town takes to process by setting the
 required mail and/or passenger percentages to 0 - although the calculation

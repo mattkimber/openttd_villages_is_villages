@@ -2,9 +2,11 @@ class Towns
 {
   town_list = [];
   current_town = 0;
+  cargoes = null;
 
-  constructor()
+  constructor(cargo_class)
   {
+    this.cargoes = cargo_class;
   }
 
   function Count()
@@ -16,8 +18,7 @@ class Towns
   {
     foreach(t in townData)
     {
-      GSLog.Info("Loading town");
-      local town = Town(t.id);
+      local town = Town(t.id, this.cargoes);
       town.InitialiseWithSize(t.max_population);
       town_list.append(town);
     }
@@ -42,7 +43,7 @@ class Towns
 
   function AddTown(town_id)
   {
-    local town = Town(town_id);
+    local town = Town(town_id, cargoes);
     town.Initialise();
     town_list.append(town);
   }

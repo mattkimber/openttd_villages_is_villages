@@ -105,8 +105,45 @@ function GetSettings() {
       medium_value = 0,
       hard_value = 0,
       custom_value = 0,
-      flags = CONFIG_BOOLEAN});
+      flags = CONFIG_BOOLEAN + CONFIG_INGAME});
     AddLabels("grow_like_crazy", {_0 = "Disabled", _1 = "Enabled"});
+    AddSetting({
+        name = "growth_goods",
+        description = "Maximum town growth per 100 crates goods delivered"
+        easy_value = 10,
+        medium_value = 5,
+        hard_value = 2,
+        custom_value = 2,
+        flags = CONFIG_INGAME,
+        min_value = 0,
+        max_value = 100,
+        step_size = 1
+      });
+    AddSetting({
+        name = "growth_building_materials",
+        description = "Maximum town growth per 100 crates building materials delivered"
+        easy_value = 20,
+        medium_value = 10,
+        hard_value = 5,
+        custom_value = 5,
+        flags = CONFIG_INGAME,
+        min_value = 0,
+        max_value = 100,
+        step_size = 1
+      });
+    AddSetting({
+        name = "growth_alcohol",
+        description = "Maximum town growth per 100 litres alcohol delivered"
+        easy_value = 5,
+        medium_value = 2,
+        hard_value = 1,
+        custom_value = 1,
+        flags = CONFIG_INGAME,
+        min_value = 0,
+        max_value = 100,
+        step_size = 1
+      });
+
 
   }
 }

@@ -14,11 +14,15 @@ class Town
   last_growth_state = 0;
 
   text_has_changed = false;
+  next_cargo_process_tick = 0;
 
-  constructor(town_id) {
+  cargoes = null;
+
+  constructor(town_id, cargo_class) {
     this.id = town_id;
     this.is_city = GSTown.IsCity(this.id);
     this.last_growth_state = GSTown.TOWN_GROWTH_NORMAL;
+    this.cargoes = cargo_class;
   }
 
   function Initialise() {
@@ -110,6 +114,35 @@ class Town
     return (this.passenger_shortfall <= 0 && this.mail_shortfall <= 0);
   }
 
+  function ApplyCargoEffect(cargo_id, effect)
+  {
+    local cargo_delivered = 0;
+
+    for(local company_id = GSCompany.COMPANY_FIRST; company_id <= GSCompany.COMPANY_LAST; company_id++){
+      cargo_delivered += GSCargoMonitor.GetTownDeliveryAmount(company_id, cargo_id, this.id, true);
+		}
+
+    if(cargo_delivered > 0 && this.max_population <= (this.current_population * 12) / 10)
+    {
+      // GSLog.Info("Increasing population amount from " + this.max_population + " for " + cargo_delivered + " units of cargo");
+      this.max_population += (cargo_delivered * effect) / 100;
+      //GSLog.Info("New max population: " + this.max_population);
+    }
+  }
+
+  function ProcessDeliveredCargo()
+  {
+    if(cargoes.has_goods && GSController.GetSetting("growth_goods") > 0) {
+      ApplyCargoEffect(cargoes.goods_id, GSController.GetSetting("growth_goods"));
+    }
+    if(cargoes.has_alcohol && GSController.GetSetting("growth_alcohol") > 0) {
+      ApplyCargoEffect(cargoes.alcohol_id, GSController.GetSetting("growth_alcohol"));
+    }
+    if(cargoes.has_building_materials && GSController.GetSetting("growth_building_materials") > 0) {
+      ApplyCargoEffect(cargoes.building_materials_id, GSController.GetSetting("growth_building_materials"));
+    }
+  }
+
   function Process()
   {
     this.current_population = GSTown.GetPopulation(this.id);
@@ -120,6 +153,13 @@ class Town
     if(this.current_population >= this.max_population && GSTown.GetFundBuildingsDuration(this.id) > 0)
     {
       this.max_population = ((this.current_population * 12) / 10) + 1;
+    }
+
+    // Apply any population increases from delivered cargo if it's been 90 days or more since we last checked it
+    if(GSController.GetTick() > this.next_cargo_process_tick)
+    {
+      this.next_cargo_process_tick = GSController.GetTick() + (90 * 74);
+      this.ProcessDeliveredCargo();
     }
 
     if(this.CanGrowOnPopulation() && this.CanGrowOnCargo())
