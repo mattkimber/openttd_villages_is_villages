@@ -91,6 +91,14 @@ function GetSettings() {
       step_size = 5
     });
   AddSetting({
+      name = "display_text",
+      description = "Show growth statistics in town window",
+      easy_value = 1,
+      medium_value = 1,
+      hard_value = 1,
+      custom_value = 1,
+      flags = CONFIG_BOOLEAN});
+  AddSetting({
       name = "grow_like_crazy",
       description = "Towns grow like crazy until limit is reached (debug mode)",
       easy_value = 0,

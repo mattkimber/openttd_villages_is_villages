@@ -36,6 +36,8 @@ class Towns
     {
       this.AddTown(t);
     }
+
+    // GSLog.Info("Added " + town_list.len() + " towns.");
   }
 
   function AddTown(town_id)

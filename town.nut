@@ -8,9 +8,17 @@ class Town
   passenger_shortfall = 0;
   mail_shortfall = 0;
 
+  last_passenger_shortfall = 0;
+  last_mail_shortfall = 0;
+  last_growth_prospect = 0;
+  last_growth_state = 0;
+
+  text_has_changed = false;
+
   constructor(town_id) {
     this.id = town_id;
     this.is_city = GSTown.IsCity(this.id);
+    this.last_growth_state = GSTown.TOWN_GROWTH_NORMAL;
   }
 
   function Initialise() {
@@ -60,8 +68,6 @@ class Town
       return true;
     }
 
-    local current_population = GSTown.GetPopulation(this.id);
-
     // If the player is funding buildings and we hit the limit then we increase the maximum population by 20% + 1
     // over the current population
     if(this.current_population >= this.max_population && GSTown.GetFundBuildingsDuration(this.id) > 0)
@@ -81,7 +87,7 @@ class Town
       return 0;
     }
 
-    local cargo_transported = GSTown.GetLastMonthTransportedPercentage (this.id, cargo_type);
+    local cargo_transported = GSTown.GetLastMonthTransportedPercentage(this.id, cargo_type);
 
     if(cargo_transported >= cargo_needed)
     {
@@ -95,6 +101,9 @@ class Town
 
   function CanGrowOnCargo()
   {
+    this.last_passenger_shortfall = this.passenger_shortfall;
+    this.last_mail_shortfall = this.mail_shortfall;
+
     this.passenger_shortfall = GetShortfall(Helper.GetPAXCargo(), "min_pax_transported");
     this.mail_shortfall = GetShortfall(Helper.GetMailCargo(), "min_mail_transported");
 
@@ -104,6 +113,7 @@ class Town
   function Process()
   {
     this.current_population = GSTown.GetPopulation(this.id);
+    local new_growth_state = 0;
 
     // If the player is funding buildings and we hit the limit then we increase the maximum population by 20% + 1
     // over the current population
@@ -117,41 +127,56 @@ class Town
       // Always grow the smallest towns to prevent them getting stuck at 0 population
       if(this.current_population == 0)
       {
-        GSTown.SetGrowthRate(this.id, 10);
+        new_growth_state = 10;
       }
       else if(GSController.GetSetting("grow_like_crazy"))
       {
-        GSTown.SetGrowthRate(this.id, 1);
+        new_growth_state = 1;
       }
       else
       {
-        GSTown.SetGrowthRate(this.id, GSTown.TOWN_GROWTH_NORMAL);
+        new_growth_state = GSTown.TOWN_GROWTH_NORMAL;
       }
     }
     else
     {
-      GSTown.SetGrowthRate(this.id, GSTown.TOWN_GROWTH_NONE);
+      new_growth_state = GSTown.TOWN_GROWTH_NONE;
     }
 
-    SetTownText();
+    // SetGrowthRate is pretty slow so we only change it if
+    // necessary.
+    if(new_growth_state != this.last_growth_state) {
+      GSTown.SetGrowthRate(this.id, new_growth_state);
+      this.last_growth_state = new_growth_state;
+    }
+
+    if(GSController.GetSetting("display_text"))
+    {
+      SetTownText();
+    }
   }
 
   function SetTownText()
   {
-    local prospect_text = this.GetGrowthProspectString();
-    local passenger_text = this.passenger_shortfall > 0 ? GSText(GSText.STR_PASSENGER_SHORTFALL, this.passenger_shortfall) : GSText(GSText.STR_PASSENGER_OK, this.passenger_shortfall);
-    local mail_text = this.mail_shortfall > 0 ? GSText(GSText.STR_MAIL_SHORTFALL, this.mail_shortfall) : GSText(GSText.STR_MAIL_OK, this.mail_shortfall);
+    local percentage = (this.max_population - this.current_population) / (max(current_population / 100, 1));
 
-    GSTown.SetText(this.id, GSText(GSText.STR_CONCAT_3, prospect_text, passenger_text, mail_text));
+    if(percentage != this.last_growth_prospect || this.passenger_shortfall != this.last_passenger_shortfall || this.mail_shortfall != this.last_mail_shortfall)
+    {
+      this.last_growth_prospect = percentage;
+
+      local prospect_text = this.GetGrowthProspectString(percentage);
+      local passenger_text = this.passenger_shortfall > 0 ? GSText(GSText.STR_PASSENGER_SHORTFALL, this.passenger_shortfall) : GSText(GSText.STR_PASSENGER_OK, this.passenger_shortfall);
+      local mail_text = this.mail_shortfall > 0 ? GSText(GSText.STR_MAIL_SHORTFALL, this.mail_shortfall) : GSText(GSText.STR_MAIL_OK, this.mail_shortfall);
+
+      GSTown.SetText(this.id, GSText(GSText.STR_CONCAT_3, prospect_text, passenger_text, mail_text));
+    }
   }
 
-  function GetGrowthProspectString()
+  function GetGrowthProspectString(percentage)
   {
     if(this.is_city) {
       return GSText(GSText.STR_GROWTH_UNLIMITED);
     }
-
-    local percentage = (this.max_population - this.current_population) / (max(current_population / 100, 1));
 
     if(percentage > 100) {
       return GSText(GSText.STR_GROWTH_OUTSTANDING);

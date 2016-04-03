@@ -54,8 +54,18 @@ vicinity.
 
 == Large Maps ==
 
-If you have more than about 1000 towns or 500 industries on your map, it can
-take a few months of game time for growth statistics to be updated - meaning
-towns may grow and industries open when they shouldn't, or towns may be
-unable to grow when they should be able to. Increasing the number of opcodes
-available to AIs and game scripts can help with this.
+If you have more than about 1000 towns on your map, it can take a few months
+of game time for growth statistics to be updated - meaning towns may grow
+when they shouldn't, or be unable to grow when they should be able to.
+
+You can reduce the amount of time each town takes to process by setting the
+required mail and/or passenger percentages to 0 - although the calculation
+is not expensive, needing to change the town texts to display the shortfalls
+is.
+
+In addition, then setting "Show growth statistics in town window" will
+provide a useful speed increase, particularly on the first run through towns
+after a game is started or loaded.
+
+Note that industry processing does not take a long time even if there are a
+huge number of them on the map.

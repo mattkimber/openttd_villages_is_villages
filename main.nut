@@ -11,6 +11,7 @@ class VillagesIsVillages extends GSController
   data_loaded = false;
   towns = [];
   industries = [];
+  total_towns_processed = 0;
 
   constructor()
   {
@@ -42,29 +43,39 @@ function VillagesIsVillages::Start()
   while (true) {
     this.Sleep(1);
 
-    local town_count = towns.Count();
-    local industry_count = industries.Count();
+    // GSLog.Info("Starting town processing loop on tick " + this.GetTick());
+
     local i = 0;
 
-    while((i < town_count / 10 || i < 1) && this.GetOpsTillSuspend() > 100)
+    local town_count = towns.Count();
+    local end_town_processing_tick = this.GetTick() + 250;
+
+    while(i < town_count && this.GetTick() < end_town_processing_tick)
     {
       towns.ProcessNextTown();
       i++;
     }
 
-    if(GSController.GetSetting("manage_industries")) 
+    this.total_towns_processed = total_towns_processed + i;
+    // GSLog.Info("Processed " + i + " towns by tick " + this.GetTick());
+
+    if(GSController.GetSetting("manage_industries"))
     {
       this.Sleep(1);
-      i = 0;
-
-      while((i < industry_count / 10 || i < 1) && this.GetOpsTillSuspend() > 100)
-      {
-        industries.ProcessNextIndustry();
-        i++;
-      }
+      industries.Process();
     }
 
-    this.Sleep(1);
+    // GSLog.Info("All industries processed by tick " + this.GetTick());
+
+    if(this.total_towns_processed >= town_count) {
+      this.total_towns_processed = 0;
+      // GSLog.Info("All towns have been processed - sleeping for 10 days");
+      this.Sleep(10 * 74);
+    }
+    else
+    {
+      this.Sleep(1);
+    }
 
     // Process any events which happened while we were sleeping
     while(GSEventController.IsEventWaiting())

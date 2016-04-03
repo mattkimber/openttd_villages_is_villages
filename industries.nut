@@ -1,7 +1,6 @@
 class Industries
 {
-  industries_served = 0;
-  current_industry = 0;
+  next_list_rebuild_tick = 0;
 
   is_enabled = false;
   industry_list = [];
@@ -10,7 +9,8 @@ class Industries
 
   constructor()
   {
-
+    // Rebuild industry list approximately every 3 momths
+    this.next_list_rebuild_tick = GSController.GetTick() + (74 * 30 * 3);
   }
 
   function Count()
@@ -18,7 +18,7 @@ class Industries
     return industry_list.len();
   }
 
-  function IsIndustrySpawningAllowed()
+  function IsIndustrySpawningAllowed(industries_served)
   {
     // If we have no industries then spawning is allowed by default
     if(this.industry_list.len() == 0)
@@ -31,45 +31,44 @@ class Industries
     return ((industries_served * 100) / this.industry_list.len() >= GSController.GetSetting("min_industries_served"))
   }
 
-  function ProcessNextIndustry()
+  function Process()
   {
+    local industries_served = 0;
+
     if(!is_enabled || this.industry_list.len() == 0)
     {
       return;
     }
 
-    local industry = industry_list[current_industry];
+    foreach(industry in industry_list)
+    {
 
-    if(!industry.IsValid()) {
-      return;
+      if(!industry.IsValid()) {
+        return;
+      }
+
+      if(industry.IsServed())
+      {
+        industries_served++;
+      }
     }
 
-    local is_served = industry.IsServed();
+    this.UpdateGameSetting(industries_served);
 
-    if(is_served)
+    if(GSController.GetTick() >= this.next_list_rebuild_tick)
     {
-      this.industries_served++;
-    }
-
-    current_industry++;
-
-    if(current_industry >= industry_list.len())
-    {
-      this.UpdateGameSetting();
-
-      current_industry = 0;
-      this.industries_served = 0;
-
       // Industry open/close events don't capture player actions so we
-      // rebuild the list on each iteration through.
+      // rebuild the list after several iterations.
       this.industry_list = [];
       this.BuildIndustryList();
+      this.next_list_rebuild_tick = GSController.GetTick() + (74 * 30 * 3);
     }
+
   }
 
-  function UpdateGameSetting()
+  function UpdateGameSetting(industries_served)
   {
-    if(IsIndustrySpawningAllowed())
+    if(IsIndustrySpawningAllowed(industries_served))
     {
       if(!this.spawn_was_enabled)
       {
@@ -103,6 +102,9 @@ class Industries
     {
       this.AddIndustry(i);
     }
+
+    // GSLog.Info("(Re-)built industry list for " + industry_list.len() + " industries");
+
   }
 
   function AddIndustry(industry_id)
