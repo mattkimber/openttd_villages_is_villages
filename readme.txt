@@ -1,4 +1,5 @@
 Villages Is Villages
+====================
 
 This is a simple game script to apply population growth limits to towns in
 order to prevent everything on the map growing to an enormous metropolis
@@ -29,10 +30,11 @@ If a town has hit its growth limit and you'd like it to be larger:
 * "Fund New Buildings" will permanently increase the population limit to 20%
   above the town's current population for every month where new buildings are
   being funded and the town is already at its population limit.
-* Delivering goods (or building materials and alcohol if you are using FIRS)
-  will increase the population limit in proportion to the amount delivered,
-  up to a limit of 20% above the town's current population. By default,
-  building materials have the largest impact, with alcohol having the least.
+* Delivering goods or food (plus building materials and alcohol if you are using
+  FIRS) will increase the population limit in proportion to the amount
+  delivered, up to a limit of 20% above the town's current population.
+  By default, building materials have the largest impact, with food and alcohol
+  having the least.
 
 Cargo delivery is checked once per 90 days.
 
