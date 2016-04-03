@@ -1,12 +1,19 @@
 class Cargoes
 {
-  has_goods = false;
-  has_building_materials = false;
-  has_alcohol = false;
+  handled_cargo = [];
 
-  goods_id = 0;
-  building_materials_id = 0;
-  alcohol_id = 0;
+  static cargo_defs = {
+    BDMT = "growth_building_materials",
+    GOOD = "growth_goods",
+    BEER = "growth_alcohol",
+    FOOD = "growth_food",
+    PETR = "growth_petrol"
+  }
+
+  function GetHandledCargoes()
+  {
+    return this.handled_cargo;
+  }
 
   constructor()
   {
@@ -14,22 +21,11 @@ class Cargoes
     {
       local label = GSCargo.GetCargoLabel(c);
 
-      if(label == "BDMT") {
-        GSLog.Info("Building materials are available");
-        this.has_building_materials = true;
-        this.building_materials_id = c;
+      if(cargo_defs.rawin(label))
+      {
+        this.handled_cargo.append(Cargo(c, cargo_defs[label]));
+        GSLog.Info("Setting up cargo handling for " + label + " (cargo ID " + c + ")");
       }
-      else if(label == "GOOD") {
-        GSLog.Info("Goods are available");
-        this.has_goods = true;
-        this.goods_id = c;
-      }
-      else if(label == "BEER") {
-        GSLog.Info("Alcohol is available");
-        this.has_alcohol = true;
-        this.alcohol_id = c;
-      }
-
     }
   }
 

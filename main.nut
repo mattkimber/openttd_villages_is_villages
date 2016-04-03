@@ -3,6 +3,7 @@ require("town.nut");
 require("industries.nut");
 require("industry.nut");
 require("cargoes.nut");
+require("cargo.nut");
 
 import("util.superlib", "SuperLib", 38);
 Helper <- SuperLib.Helper;
@@ -17,16 +18,18 @@ class VillagesIsVillages extends GSController
 
   constructor()
   {
+    GSLog.Info("Starting Villages Is Villages...")
     cargoes = Cargoes();
   }
 }
 
 function VillagesIsVillages::Start()
 {
-  GSLog.Info("Villages Is Villages started");
+  GSLog.Info("Villages Is Villages has started");
 
   if(!data_loaded)
   {
+    GSLog.Info("Initialising towns");
     towns = Towns(cargoes);
     towns.Initialise();
   }
@@ -42,6 +45,9 @@ function VillagesIsVillages::Start()
     }
     industries.Initialise();
   }
+
+  GSLog.Info("Number of towns: " + towns.Count());
+  GSLog.Info("Number of industries: " + industries.Count());
 
   while (true) {
     this.Sleep(1);
@@ -117,7 +123,7 @@ function VillagesIsVillages::Load(version, data)
     towns = Towns(cargoes);
     towns.InitialiseWithData(townData);
 
-    GSLog.Info("Loaded town data");
+    GSLog.Info("Loaded town data from save file");
 
     data_loaded = true;
   }

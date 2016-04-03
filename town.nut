@@ -124,7 +124,7 @@ class Town
 
     if(cargo_delivered > 0 && this.max_population <= (this.current_population * 12) / 10)
     {
-      // GSLog.Info("Increasing population amount from " + this.max_population + " for " + cargo_delivered + " units of cargo");
+      // GSLog.Info("Increasing population amount from " + this.max_population + " for " + cargo_delivered + " units of cargo " + cargo_id);
       this.max_population += (cargo_delivered * effect) / 100;
       //GSLog.Info("New max population: " + this.max_population);
     }
@@ -132,14 +132,13 @@ class Town
 
   function ProcessDeliveredCargo()
   {
-    if(cargoes.has_goods && GSController.GetSetting("growth_goods") > 0) {
-      ApplyCargoEffect(cargoes.goods_id, GSController.GetSetting("growth_goods"));
-    }
-    if(cargoes.has_alcohol && GSController.GetSetting("growth_alcohol") > 0) {
-      ApplyCargoEffect(cargoes.alcohol_id, GSController.GetSetting("growth_alcohol"));
-    }
-    if(cargoes.has_building_materials && GSController.GetSetting("growth_building_materials") > 0) {
-      ApplyCargoEffect(cargoes.building_materials_id, GSController.GetSetting("growth_building_materials"));
+    foreach(cargo in cargoes.GetHandledCargoes())
+    {
+      local effect = GSController.GetSetting(cargo.Setting());
+
+      if(effect > 0) {
+        ApplyCargoEffect(cargo.Id(), effect);
+      }
     }
   }
 

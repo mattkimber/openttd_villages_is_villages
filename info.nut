@@ -132,8 +132,32 @@ function GetSettings() {
         step_size = 1
       });
     AddSetting({
+        name = "growth_petrol",
+        description = "Maximum town growth per 100 litres petroleum fuels delivered"
+        easy_value = 20,
+        medium_value = 10,
+        hard_value = 5,
+        custom_value = 5,
+        flags = CONFIG_INGAME,
+        min_value = 0,
+        max_value = 100,
+        step_size = 1
+      });
+    AddSetting({
         name = "growth_alcohol",
         description = "Maximum town growth per 100 litres alcohol delivered"
+        easy_value = 5,
+        medium_value = 2,
+        hard_value = 1,
+        custom_value = 1,
+        flags = CONFIG_INGAME,
+        min_value = 0,
+        max_value = 100,
+        step_size = 1
+      });
+    AddSetting({
+        name = "growth_food",
+        description = "Maximum town growth per 100 tons food delivered"
         easy_value = 5,
         medium_value = 2,
         hard_value = 1,
