@@ -98,15 +98,6 @@ function GetSettings() {
       hard_value = 1,
       custom_value = 1,
       flags = CONFIG_BOOLEAN});
-  AddSetting({
-      name = "grow_like_crazy",
-      description = "Towns grow like crazy until limit is reached (debug mode)",
-      easy_value = 0,
-      medium_value = 0,
-      hard_value = 0,
-      custom_value = 0,
-      flags = CONFIG_BOOLEAN + CONFIG_INGAME});
-    AddLabels("grow_like_crazy", {_0 = "Disabled", _1 = "Enabled"});
     AddSetting({
         name = "growth_goods",
         description = "Maximum town growth per 100 crates goods delivered"

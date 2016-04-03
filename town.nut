@@ -164,18 +164,7 @@ class Town
     if(this.CanGrowOnCargo() && this.CanGrowOnPopulation())
     {
       // Always grow the smallest towns to prevent them getting stuck at 0 population
-      if(this.current_population == 0)
-      {
-        new_growth_state = 10;
-      }
-      else if(GSController.GetSetting("grow_like_crazy"))
-      {
-        new_growth_state = 1;
-      }
-      else
-      {
-        new_growth_state = GSTown.TOWN_GROWTH_NORMAL;
-      }
+      new_growth_state = this.current_population == 0 ? 10 : GSTown.TOWN_GROWTH_NORMAL;
     }
     else
     {
