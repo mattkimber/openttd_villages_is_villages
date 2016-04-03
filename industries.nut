@@ -33,6 +33,16 @@ class Industries
 
   function Process()
   {
+    if(GSController.GetTick() >= this.next_list_rebuild_tick)
+    {
+      // Industry open/close events don't capture player actions so we
+      // rebuild the list after several iterations.
+      this.industry_list = [];
+      this.BuildIndustryList();
+      this.next_list_rebuild_tick = GSController.GetTick() + (74 * 30 * 3);
+      GSController.Sleep(1);
+    }
+
     local industries_served = 0;
 
     if(!is_enabled || this.industry_list.len() == 0)
@@ -54,16 +64,6 @@ class Industries
     }
 
     this.UpdateGameSetting(industries_served);
-
-    if(GSController.GetTick() >= this.next_list_rebuild_tick)
-    {
-      // Industry open/close events don't capture player actions so we
-      // rebuild the list after several iterations.
-      this.industry_list = [];
-      this.BuildIndustryList();
-      this.next_list_rebuild_tick = GSController.GetTick() + (74 * 30 * 3);
-    }
-
   }
 
   function UpdateGameSetting(industries_served)
