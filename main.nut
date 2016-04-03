@@ -5,7 +5,7 @@ require("industry.nut");
 require("cargoes.nut");
 require("cargo.nut");
 
-import("util.superlib", "SuperLib", 38);
+import("util.superlib", "SuperLib", 39);
 Helper <- SuperLib.Helper;
 
 class VillagesIsVillages extends GSController
