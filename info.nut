@@ -4,7 +4,7 @@ SELF_DATE <- "2016-03-30";
 class VillagesIsVillages extends GSInfo {
 function GetAuthor()		{ return "Timberwolf"; }
 function GetName()			{ return "Villages Is Villages"; }
-function GetDescription() 	{ return "Sets growth limits on random towns to keep some villages as villages."; }
+function GetDescription() 	{ return "Keep villages as villages! Stops every village from growing into a metropolis, and prevents industries from taking over the map."; }
 function GetVersion()		{ return SELF_VERSION; }
 function GetDate()			{ return SELF_DATE; }
 function CreateInstance()	{ return "VillagesIsVillages"; }
