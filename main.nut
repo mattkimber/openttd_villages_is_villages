@@ -19,7 +19,7 @@ class VillagesIsVillages extends GSController
   constructor()
   {
     GSLog.Info("Starting Villages Is Villages...")
-    cargoes = Cargoes();
+    this.cargoes = Cargoes();
   }
 }
 
@@ -27,14 +27,14 @@ function VillagesIsVillages::Start()
 {
   GSLog.Info("Villages Is Villages has started");
 
-  if(!data_loaded)
+  if(!this.data_loaded)
   {
     GSLog.Info("Initialising towns");
-    towns = Towns(cargoes);
-    towns.Initialise();
+    this.towns = Towns(cargoes);
+    this.towns.Initialise();
   }
 
-  industries = Industries();
+  this.industries = Industries();
 
   if(GSController.GetSetting("manage_industries"))
   {
@@ -43,11 +43,11 @@ function VillagesIsVillages::Start()
       GSLog.Error("Cannot manage industries - industry funding level setting not found");
       return;
     }
-    industries.Initialise();
+    this.industries.Initialise();
   }
 
-  GSLog.Info("Number of towns: " + towns.Count());
-  GSLog.Info("Number of industries: " + industries.Count());
+  GSLog.Info("Number of towns: " + this.towns.Count());
+  GSLog.Info("Number of industries: " + this.industries.Count());
 
   while (true) {
     this.Sleep(1);
@@ -61,17 +61,17 @@ function VillagesIsVillages::Start()
 
     while(i < town_count && this.GetTick() < end_town_processing_tick)
     {
-      towns.ProcessNextTown();
+      this.towns.ProcessNextTown();
       i++;
     }
 
-    this.total_towns_processed = total_towns_processed + i;
+    this.total_towns_processed = this.total_towns_processed + i;
     // GSLog.Info("Processed " + i + " towns by tick " + this.GetTick());
 
     if(GSController.GetSetting("manage_industries"))
     {
       this.Sleep(1);
-      industries.Process();
+      this.industries.Process();
     }
 
     // GSLog.Info("All industries processed by tick " + this.GetTick());
@@ -94,7 +94,7 @@ function VillagesIsVillages::Start()
       {
         local townEvent = GSEventTownFounded.Convert(event);
         GSLog.Info("New town founded");
-        towns.AddTown(townEvent.GetTownID());
+        this.towns.AddTown(townEvent.GetTownID());
       }
     }
   }
@@ -120,11 +120,11 @@ function VillagesIsVillages::Load(version, data)
 
   if(data.rawin("towns")) {
     townData = data.rawget("towns");
-    towns = Towns(cargoes);
+    this.towns = Towns(cargoes);
     towns.InitialiseWithData(townData);
 
     GSLog.Info("Loaded town data from save file");
 
-    data_loaded = true;
+    this.data_loaded = true;
   }
 }

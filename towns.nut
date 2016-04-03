@@ -20,7 +20,7 @@ class Towns
     {
       local town = Town(t.id, this.cargoes);
       town.InitialiseWithSize(t.max_population);
-      town_list.append(town);
+      this.town_list.append(town);
     }
   }
 
@@ -43,16 +43,16 @@ class Towns
 
   function AddTown(town_id)
   {
-    local town = Town(town_id, cargoes);
+    local town = Town(town_id, this.cargoes);
     town.Initialise();
-    town_list.append(town);
+    this.town_list.append(town);
   }
 
   function ProcessNextTown()
   {
-    local town = town_list[current_town];
+    local town = this.town_list[current_town];
     town.Process();
 
-    current_town = (current_town + 1) % town_list.len();
+    current_town = (current_town + 1) % this.town_list.len();
   }
 }

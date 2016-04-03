@@ -21,9 +21,9 @@ class Cargoes
     {
       local label = GSCargo.GetCargoLabel(c);
 
-      if(cargo_defs.rawin(label))
+      if(Cargoes.cargo_defs.rawin(label))
       {
-        this.handled_cargo.append(Cargo(c, cargo_defs[label]));
+        this.handled_cargo.append(Cargo(c, Cargoes.cargo_defs[label]));
         GSLog.Info("Setting up cargo handling for " + label + " (cargo ID " + c + ")");
       }
     }

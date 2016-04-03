@@ -45,12 +45,12 @@ class Industries
 
     local industries_served = 0;
 
-    if(!is_enabled || this.industry_list.len() == 0)
+    if(!this.is_enabled || this.industry_list.len() == 0)
     {
       return;
     }
 
-    foreach(industry in industry_list)
+    foreach(industry in this.industry_list)
     {
 
       if(!industry.IsValid()) {
@@ -68,7 +68,7 @@ class Industries
 
   function UpdateGameSetting(industries_served)
   {
-    if(IsIndustrySpawningAllowed(industries_served))
+    if(this.IsIndustrySpawningAllowed(industries_served))
     {
       if(!this.spawn_was_enabled)
       {

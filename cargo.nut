@@ -1,6 +1,5 @@
 class Cargo
 {
-
   setting = "";
   id = 0;
 

@@ -108,8 +108,8 @@ class Town
     this.last_passenger_shortfall = this.passenger_shortfall;
     this.last_mail_shortfall = this.mail_shortfall;
 
-    this.passenger_shortfall = GetShortfall(Helper.GetPAXCargo(), "min_pax_transported");
-    this.mail_shortfall = GetShortfall(Helper.GetMailCargo(), "min_mail_transported");
+    this.passenger_shortfall = this.GetShortfall(Helper.GetPAXCargo(), "min_pax_transported");
+    this.mail_shortfall = this.GetShortfall(Helper.GetMailCargo(), "min_mail_transported");
 
     return (this.passenger_shortfall <= 0 && this.mail_shortfall <= 0);
   }
@@ -137,7 +137,7 @@ class Town
       local effect = GSController.GetSetting(cargo.Setting());
 
       if(effect > 0) {
-        ApplyCargoEffect(cargo.Id(), effect);
+        this.ApplyCargoEffect(cargo.Id(), effect);
       }
     }
   }
@@ -180,7 +180,7 @@ class Town
 
     if(GSController.GetSetting("display_text"))
     {
-      SetTownText();
+      this.SetTownText();
     }
   }
 
@@ -200,6 +200,7 @@ class Town
     }
   }
 
+  // TODO: find a nicer, less boilerplatey way of doing this
   function GetGrowthProspectString(percentage)
   {
     if(this.is_city) {

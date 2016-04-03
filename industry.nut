@@ -17,7 +17,7 @@ class Industry
   function IsServed()
   {
     // Calculate if the industry is considered to be "served"
-    if(has_dock_or_heliport || GSIndustry.GetAmountOfStationsAround(this.id) > 0)
+    if(this.has_dock_or_heliport || GSIndustry.GetAmountOfStationsAround(this.id) > 0)
     {
       // Check if the industry produces anything
       local industry_type = GSIndustry.GetIndustryType(this.id);
