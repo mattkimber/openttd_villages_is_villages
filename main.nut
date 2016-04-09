@@ -34,6 +34,8 @@ function VillagesIsVillages::Start()
     this.towns.Initialise();
   }
 
+  GSLog.Info("Number of towns managed: " + this.towns.Count());
+
   this.industries = Industries();
 
   if(GSController.GetSetting("manage_industries"))
@@ -44,10 +46,13 @@ function VillagesIsVillages::Start()
       return;
     }
     this.industries.Initialise();
+    GSLog.Info("Number of industries managed: " + this.industries.Count());
+  }
+  else
+  {
+    GSLog.Info("Not managing industries.")
   }
 
-  GSLog.Info("Number of towns: " + this.towns.Count());
-  GSLog.Info("Number of industries: " + this.industries.Count());
 
   while (true) {
     this.Sleep(1);

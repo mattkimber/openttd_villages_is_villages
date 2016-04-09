@@ -1,0 +1,9 @@
+v2:
+
+Code cleanup.
+Make it more obvious in initialisation messages when industries are not being
+managed by Villages Is Villages.
+
+v1:
+
+Initial release
