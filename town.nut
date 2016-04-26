@@ -13,6 +13,8 @@ class Town
   last_growth_prospect = 0;
   last_growth_state = 0;
 
+  needs_cargo = false;
+
   text_has_changed = false;
   next_cargo_process_tick = 0;
 
@@ -118,15 +120,18 @@ class Town
   {
     local cargo_delivered = 0;
 
-    for(local company_id = GSCompany.COMPANY_FIRST; company_id <= GSCompany.COMPANY_LAST; company_id++){
+    for(local company_id = GSCompany.COMPANY_FIRST; company_id <= GSCompany.COMPANY_LAST; company_id++) {
       cargo_delivered += GSCargoMonitor.GetTownDeliveryAmount(company_id, cargo_id, this.id, true);
 		}
 
-    if(cargo_delivered > 0 && this.max_population <= (this.current_population * 12) / 10)
-    {
-      // GSLog.Info("Increasing population amount from " + this.max_population + " for " + cargo_delivered + " units of cargo " + cargo_id);
-      this.max_population += (cargo_delivered * effect) / 100;
-      //GSLog.Info("New max population: " + this.max_population);
+    this.needs_cargo = false;
+
+    if(this.max_population <= (this.current_population * 12) / 10) {
+      if(cargo_delivered > 0) {
+        this.max_population += (cargo_delivered * effect) / 100;
+      } else {
+        this.needs_cargo = true;
+      }
     }
   }
 
@@ -196,8 +201,31 @@ class Town
       local passenger_text = this.passenger_shortfall > 0 ? GSText(GSText.STR_PASSENGER_SHORTFALL, this.passenger_shortfall) : GSText(GSText.STR_PASSENGER_OK, this.passenger_shortfall);
       local mail_text = this.mail_shortfall > 0 ? GSText(GSText.STR_MAIL_SHORTFALL, this.mail_shortfall) : GSText(GSText.STR_MAIL_OK, this.mail_shortfall);
 
-      GSTown.SetText(this.id, GSText(GSText.STR_CONCAT_3, prospect_text, passenger_text, mail_text));
+      local advice_text = this.GetTownGrowthAdviceString();
+
+      GSTown.SetText(this.id, GSText(GSText.STR_CONCAT_4, prospect_text, passenger_text, mail_text, advice_text));
     }
+  }
+
+  function GetTownGrowthAdviceString()
+  {
+    if(this.passenger_shortfall > 0) {
+      return GSText(GSText.STR_DELIVER_PASSENGERS);
+    }
+
+    if(this.mail_shortfall > 0) {
+      return GSText(GSText.STR_DELIVER_MAIL);
+    }
+
+    if(this.last_growth_prospect > 0 || this.is_city) {
+      return GSText(GSText.STR_NULL);
+    }
+
+    if(this.needs_cargo) {
+      return GSText(GSText.STR_DELIVER_CARGO);
+    }
+
+    return GSText(GSText.STR_FUND_BUILDINGS);
   }
 
   // TODO: find a nicer, less boilerplatey way of doing this
