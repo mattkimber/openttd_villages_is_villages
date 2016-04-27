@@ -13,9 +13,9 @@ STR_PASSENGER_OK :Passenger shortfall: {ORANGE}{NUM}{BLACK} {}
 STR_MAIL_OK :Mail shortfall: {ORANGE}{NUM}{BLACK}
 STR_DELIVER_PASSENGERS :{}{}Transport more passengers to make this town grow
 STR_DELIVER_MAIL :{}{}Transport more mail to make this town grow
-STR_DELIVER_CARGO :{}{}Deliver town cargo to make this town grow
+STR_DELIVER_CARGO :{}{}Deliver {CARGO_LIST} to make this town grow
 STR_FUND_BUILDINGS :{}{}Fund buildings to make this town grow
 STR_NULL :
 STR_CONCAT_2 :{STRING}{STRING}
 STR_CONCAT_3 :{STRING}{STRING1}{STRING1}
-STR_CONCAT_4 :{STRING}{STRING1}{STRING1}{STRING}
+STR_CONCAT_4 :{STRING}{STRING1}{STRING1}{STRING1}

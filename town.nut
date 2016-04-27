@@ -8,14 +8,15 @@ class Town
   passenger_shortfall = 0;
   mail_shortfall = 0;
 
-  last_passenger_shortfall = 0;
-  last_mail_shortfall = 0;
-  last_growth_prospect = 0;
+  most_needed_cargo = 0;
+  biggest_cargo_effect = 0;
+
+  last_passenger_shortfall = -1;
+  last_mail_shortfall = -1;
+  last_growth_prospect = -1;
   last_growth_state = 0;
+  last_needed_cargo = 0;
 
-  needs_cargo = false;
-
-  text_has_changed = false;
   next_cargo_process_tick = 0;
 
   cargoes = null;
@@ -105,7 +106,7 @@ class Town
     return ((cargo_needed - cargo_transported) * production) / 100;
   }
 
-  function CanGrowOnCargo()
+  function CanGrowOnPassengerAndMail()
   {
     this.last_passenger_shortfall = this.passenger_shortfall;
     this.last_mail_shortfall = this.mail_shortfall;
@@ -124,19 +125,22 @@ class Town
       cargo_delivered += GSCargoMonitor.GetTownDeliveryAmount(company_id, cargo_id, this.id, true);
 		}
 
-    this.needs_cargo = false;
-
     if(this.max_population <= (this.current_population * 12) / 10) {
       if(cargo_delivered > 0) {
         this.max_population += (cargo_delivered * effect) / 100;
-      } else {
-        this.needs_cargo = true;
+      } else if(effect > this.biggest_cargo_effect) {
+        this.biggest_cargo_effect = effect;
+        this.most_needed_cargo = cargo_id;
       }
     }
   }
 
   function ProcessDeliveredCargo()
   {
+    this.last_needed_cargo = this.most_needed_cargo;
+    this.biggest_cargo_effect = 0;
+    this.most_needed_cargo = 0;
+
     foreach(cargo in cargoes.GetHandledCargoes())
     {
       local effect = GSController.GetSetting(cargo.Setting());
@@ -166,7 +170,7 @@ class Town
       this.ProcessDeliveredCargo();
     }
 
-    if(this.CanGrowOnCargo() && this.CanGrowOnPopulation())
+    if(this.CanGrowOnPassengerAndMail() && this.CanGrowOnPopulation())
     {
       // Always grow the smallest towns to prevent them getting stuck at 0 population
       new_growth_state = this.current_population == 0 ? 10 : GSTown.TOWN_GROWTH_NORMAL;
@@ -193,7 +197,12 @@ class Town
   {
     local percentage = (this.max_population - this.current_population) / (max(current_population / 100, 1));
 
-    if(percentage != this.last_growth_prospect || this.passenger_shortfall != this.last_passenger_shortfall || this.mail_shortfall != this.last_mail_shortfall)
+    if(
+        percentage != this.last_growth_prospect ||
+        this.passenger_shortfall != this.last_passenger_shortfall ||
+        this.mail_shortfall != this.last_mail_shortfall ||
+        this.most_needed_cargo != this.last_needed_cargo
+      )
     {
       this.last_growth_prospect = percentage;
 
@@ -221,8 +230,8 @@ class Town
       return GSText(GSText.STR_NULL);
     }
 
-    if(this.needs_cargo) {
-      return GSText(GSText.STR_DELIVER_CARGO);
+    if(this.most_needed_cargo != 0) {
+      return GSText(GSText.STR_DELIVER_CARGO, 1 << this.most_needed_cargo);
     }
 
     return GSText(GSText.STR_FUND_BUILDINGS);
