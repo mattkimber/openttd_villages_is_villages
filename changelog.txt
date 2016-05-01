@@ -1,3 +1,7 @@
+v5:
+
+- Added Spanish translation courtesy of SilverSurferZzZ 
+
 v4:
 
 - Helper messages are more specific about which cargo will help most.

@@ -1,0 +1,21 @@
+STR_GROWTH_UNLIMITED :Las ciudades no tienen límite de crecimiento{}
+STR_GROWTH_OUTSTANDING :Perspectivas de crecimiento: {ORANGE}Excepcionales{BLACK} {}
+STR_GROWTH_EXCELLENT :Perspectivas de crecimiento: {ORANGE}Excelentes{BLACK} {}
+STR_GROWTH_VERYGOOD :Perspectivas de crecimiento: {ORANGE}Muy Buenas{BLACK} {}
+STR_GROWTH_GOOD :Perspectivas de crecimiento: {ORANGE}Buenas{BLACK} {}
+STR_GROWTH_MEDIOCRE :Perspectivas de crecimiento: {ORANGE}Mediocres{BLACK} {}
+STR_GROWTH_POOR :Perspectivas de crecimiento: {ORANGE}Pobres{BLACK} {}
+STR_GROWTH_VERYPOOR :Perspectivas de crecimiento: {ORANGE}Muy Pobres{BLACK} {}
+STR_GROWTH_NONE :Perspectivas de crecimiento: {RED}Ninguna{BLACK} {}
+STR_PASSENGER_SHORTFALL :Escasez de pasajeros: {RED}{NUM}{BLACK} {}
+STR_MAIL_SHORTFALL :Escasez de correo: {RED}{NUM}{BLACK}
+STR_PASSENGER_OK :Escasez de pasajeros: {ORANGE}{NUM}{BLACK} {}
+STR_MAIL_OK :Escasez de correo: {ORANGE}{NUM}{BLACK}
+STR_DELIVER_PASSENGERS :{}{}Transporta más pasajeros para que esta ciudad pueda crecer
+STR_DELIVER_MAIL :{}{}Transporta más correo para que esta ciudad pueda crecer
+STR_DELIVER_CARGO :{}{}Entrega {CARGO_LIST} para que esta ciudad pueda crecer
+STR_FUND_BUILDINGS :{}{}Funda nuevos edificios para que esta ciudad pueda crecer
+STR_NULL :
+STR_CONCAT_2 :{STRING}{STRING}
+STR_CONCAT_3 :{STRING}{STRING1}{STRING1}
+STR_CONCAT_4 :{STRING}{STRING1}{STRING1}{STRING1}

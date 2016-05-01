@@ -80,3 +80,9 @@ after a game is started or loaded.
 
 Note that industry processing does not take a long time even if there are a
 huge number of them on the map.
+
+== Credits ==
+
+Code: Timberwolf
+
+Translations: SilverSurferZzZ (ES)
