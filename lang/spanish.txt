@@ -1,3 +1,4 @@
+
 STR_GROWTH_UNLIMITED :Las ciudades no tienen límite de crecimiento{}
 STR_GROWTH_OUTSTANDING :Perspectivas de crecimiento: {ORANGE}Excepcionales{BLACK} {}
 STR_GROWTH_EXCELLENT :Perspectivas de crecimiento: {ORANGE}Excelentes{BLACK} {}
@@ -17,5 +18,5 @@ STR_DELIVER_CARGO :{}{}Entrega {CARGO_LIST} para que esta localidad pueda crecer
 STR_FUND_BUILDINGS :{}{}Funda nuevos edificios para que esta localidad pueda crecer
 STR_NULL :
 STR_CONCAT_2 :{STRING}{STRING}
-STR_CONCAT_3 :{STRING}{STRING1}{STRING1}
-STR_CONCAT_4 :{STRING}{STRING1}{STRING1}{STRING1}
+STR_CONCAT_3 :{STRING}{STRING}{STRING}
+STR_CONCAT_4 :{STRING}{STRING}{STRING}{STRING}
