@@ -1,5 +1,5 @@
-SELF_VERSION <- 6;
-SELF_DATE <- "2016-05-05";
+SELF_VERSION <- 7;
+SELF_DATE <- "2016-05-18";
 
 class VillagesIsVillages extends GSInfo {
   function GetAuthor()	      { return "Timberwolf"; }
