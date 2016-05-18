@@ -1,6 +1,14 @@
+v7:
+
+- Correct debug console warnings about language files.
+
+v6:
+
+- Translation updates
+
 v5:
 
-- Added Spanish translation courtesy of SilverSurferZzZ 
+- Added Spanish translation courtesy of SilverSurferZzZ
 
 v4:
 
