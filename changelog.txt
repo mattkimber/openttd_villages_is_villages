@@ -1,3 +1,7 @@
+v8:
+
+- Fix string processing bug
+
 v7:
 
 - Correct debug console warnings about language files.
