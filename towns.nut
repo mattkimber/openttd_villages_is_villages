@@ -1,6 +1,7 @@
 class Towns
 {
   town_list = [];
+  handled_towns = {};
   current_town = 0;
   cargoes = null;
 
@@ -21,6 +22,7 @@ class Towns
       local town = Town(t.id, this.cargoes);
       town.InitialiseWithSize(t.max_population);
       this.town_list.append(town);
+      this.handled_towns[t.id] <- true;
     }
   }
 
@@ -29,23 +31,14 @@ class Towns
     return this.town_list;
   }
 
-  function Initialise()
-  {
-    local towns = GSTownList();
-
-    foreach(t, _ in towns)
-    {
-      this.AddTown(t);
-    }
-
-    // GSLog.Info("Added " + town_list.len() + " towns.");
-  }
-
   function AddTown(town_id)
   {
+    if(town_id in this.handled_towns) return;
+
     local town = Town(town_id, this.cargoes);
     town.Initialise();
     this.town_list.append(town);
+    this.handled_towns[town_id] <- true;
   }
 
   function ProcessNextTown()
@@ -54,5 +47,15 @@ class Towns
     town.Process();
 
     current_town = (current_town + 1) % this.town_list.len();
+  }
+
+  function UpdateTownList()
+  {
+    local towns = GSTownList();
+
+    foreach(t, _ in towns)
+    {
+      this.AddTown(t);
+    }
   }
 }

@@ -31,7 +31,7 @@ function VillagesIsVillages::Start()
   {
     GSLog.Info("Initialising towns");
     this.towns = Towns(cargoes);
-    this.towns.Initialise();
+    this.towns.UpdateTownList();
   }
 
   GSLog.Info("Number of towns managed: " + this.towns.Count());
@@ -84,6 +84,7 @@ function VillagesIsVillages::Start()
     if(this.total_towns_processed >= town_count) {
       this.total_towns_processed = 0;
       // GSLog.Info("All towns have been processed - sleeping for 10 days");
+      this.towns.UpdateTownList();
       this.Sleep(10 * 74);
     }
     else
@@ -125,6 +126,7 @@ function VillagesIsVillages::Load(version, data)
 
   if(data.rawin("towns")) {
     townData = data.rawget("towns");
+
     this.towns = Towns(cargoes);
     towns.InitialiseWithData(townData);
 

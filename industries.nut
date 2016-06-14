@@ -102,9 +102,6 @@ class Industries
     {
       this.AddIndustry(i);
     }
-
-    // GSLog.Info("(Re-)built industry list for " + industry_list.len() + " industries");
-
   }
 
   function AddIndustry(industry_id)
