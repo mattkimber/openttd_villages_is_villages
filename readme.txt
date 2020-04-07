@@ -40,10 +40,6 @@ Cargo delivery is checked once per 90 days.
 
 == Manage Industries ==
 
-This is an experimental feature as it relies on manipulating a game setting
-(the one specifying industry density) in order to control the opening of new
-industries.
-
 Manage Industries will prevent new industries from opening unless a certain
 proportion of those already on the map have service. This prevents the situation
 in long games where the map is completely dominated by industries, without the
@@ -59,6 +55,21 @@ There are two settings to tune the industry management behaviour:
 Industries which do not produce any output (either non-producing sink industries
 or dormant factories) are considered served if there is a station within their
 vicinity.
+
+== Economic Settings ==
+
+Economic settings are designed to increase difficulty for solo games, or
+level the playing field in multiplayer by providing gameplay elements that
+are harder for large and profitable companies to overcome.
+
+The current settings available are:
+
+* Corporation Tax applies a fixed rate of tax to the company's pre-tax
+  profit for the previous year. When playing with this enabled you can
+  expect a large tax bill every January! This significantly reduces the
+  advantage for a player who leaves a profitable company running without
+  continuing to invest in their network.
+
 
 == Large Maps ==
 

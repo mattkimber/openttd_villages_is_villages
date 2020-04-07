@@ -1,10 +1,10 @@
-SELF_VERSION <- 9;
-SELF_DATE <- "2016-06-14";
+SELF_VERSION <- 10;
+SELF_DATE <- "2020-04-07";
 
 class VillagesIsVillages extends GSInfo {
   function GetAuthor()	      { return "Timberwolf"; }
   function GetName()			    { return "Villages Is Villages"; }
-  function GetDescription()   { return "Keep villages as villages! Stops every village from growing into a metropolis, and prevents industries from taking over the map. Translations: SilverSurferZzZ (ES)"; }
+  function GetDescription()   { return "Keep villages as villages! Control town and industry growth, with added bonus economy settings. Translations: SilverSurferZzZ (ES)"; }
   function GetVersion()		    { return SELF_VERSION; }
   function GetDate()			    { return SELF_DATE; }
   function CreateInstance()	  { return "VillagesIsVillages"; }
@@ -63,11 +63,11 @@ class VillagesIsVillages extends GSInfo {
     });
     AddSetting({
       name = "manage_industries",
-      description = "Manage industries (experimental)",
-      easy_value = 0,
-      medium_value = 0,
-      hard_value = 0,
-      custom_value = 0,
+      description = "Manage industries",
+      easy_value = 1,
+      medium_value = 1,
+      hard_value = 1,
+      custom_value = 1,
       flags = CONFIG_BOOLEAN
     });
     AddSetting({
@@ -162,6 +162,27 @@ class VillagesIsVillages extends GSInfo {
       min_value = 0,
       max_value = 100,
       step_size = 1
+    });
+    AddSetting({
+      name = "manage_economy",
+      description = "Economic settings",
+      easy_value = 0,
+      medium_value = 0,
+      hard_value = 0,
+      custom_value = 0,
+      flags = CONFIG_BOOLEAN
+    });
+    AddSetting({
+      name = "corp_tax_level",
+      description = "Corporation Tax (%)",
+      easy_value = 10,
+      medium_value = 20,
+      hard_value = 50,
+      custom_value = 20,
+      flags = CONFIG_INGAME,
+      min_value = 0,
+      max_value = 95,
+      step_size = 5
     });
   }
 }

@@ -4,8 +4,10 @@ require("industries.nut");
 require("industry.nut");
 require("cargoes.nut");
 require("cargo.nut");
+require("economy.nut");
+require("company.nut");
 
-import("util.superlib", "SuperLib", 39);
+import("util.superlib", "SuperLib", 40);
 Helper <- SuperLib.Helper;
 
 class VillagesIsVillages extends GSController
@@ -14,6 +16,7 @@ class VillagesIsVillages extends GSController
   towns = null;
   industries = null;
   cargoes = null;
+  economy = null;
   total_towns_processed = 0;
 
   constructor()
@@ -32,6 +35,9 @@ function VillagesIsVillages::Start()
     GSLog.Info("Initialising towns");
     this.towns = Towns(cargoes);
     this.towns.UpdateTownList();
+
+    // Start with no  previous tax year
+    this.economy = Economy(null);
   }
 
   GSLog.Info("Number of towns managed: " + this.towns.Count());
@@ -53,54 +59,76 @@ function VillagesIsVillages::Start()
     GSLog.Info("Not managing industries.")
   }
 
+  local last_industry_process_tick = this.GetTick() - 750;
+  local last_town_complete_tick = this.GetTick() - 750;
+
 
   while (true) {
     this.Sleep(1);
-
-    // GSLog.Info("Starting town processing loop on tick " + this.GetTick());
-
-    local i = 0;
-
-    local town_count = towns.Count();
-    local end_town_processing_tick = this.GetTick() + 250;
-
-    while(i < town_count && this.GetTick() < end_town_processing_tick)
+ 
+    if(GSController.GetSetting("manage_economy"))
     {
-      this.towns.ProcessNextTown();
-      i++;
+      this.economy.ProcessCorporationTax();
     }
 
-    this.total_towns_processed = this.total_towns_processed + i;
-    // GSLog.Info("Processed " + i + " towns by tick " + this.GetTick());
+    if(this.GetTick() > last_town_complete_tick + 740)
+    {
+      local i = 0;
+      local town_count = towns.Count();
+      local end_town_processing_tick = this.GetTick() + 70;
 
-    if(GSController.GetSetting("manage_industries"))
+      while(i < town_count && this.GetTick() < end_town_processing_tick)
+      {
+        this.towns.ProcessNextTown();
+        i++;
+      }
+
+      this.total_towns_processed = this.total_towns_processed + i;
+
+      if(this.total_towns_processed >= town_count) {
+        this.total_towns_processed = 0;
+        this.towns.UpdateTownList();
+        last_town_complete_tick = this.GetTick();
+        this.Sleep(1);
+      }
+    }
+
+    if(GSController.GetSetting("manage_industries") && this.GetTick() > last_industry_process_tick + 740)
     {
       this.Sleep(1);
       this.industries.Process();
-    }
-
-    // GSLog.Info("All industries processed by tick " + this.GetTick());
-
-    if(this.total_towns_processed >= town_count) {
-      this.total_towns_processed = 0;
-      // GSLog.Info("All towns have been processed - sleeping for 10 days");
-      this.towns.UpdateTownList();
-      this.Sleep(10 * 74);
-    }
-    else
-    {
-      this.Sleep(1);
+      last_industry_process_tick = this.GetTick();
     }
 
     // Process any events which happened while we were sleeping
     while(GSEventController.IsEventWaiting())
     {
       local event = GSEventController.GetNextEvent();
-      if(event != null && event.GetEventType() == GSEvent.ET_TOWN_FOUNDED)
+      if(event != null)
       {
-        local townEvent = GSEventTownFounded.Convert(event);
-        GSLog.Info("New town founded");
-        this.towns.AddTown(townEvent.GetTownID());
+        if(event.GetEventType() == GSEvent.ET_TOWN_FOUNDED)
+        {
+          local townEvent = GSEventTownFounded.Convert(event);
+          this.towns.AddTown(townEvent.GetTownID());
+        }
+
+        if(event.GetEventType() == GSEvent.ET_COMPANY_NEW)
+        {
+          local companyEvent = GSEventCompanyNew.Convert(event);
+          this.economy.AddCompany(companyEvent.GetCompanyID());
+        }
+
+        if(event.GetEventType() == GSEvent.ET_COMPANY_MERGER)
+        {
+          local companyEvent = GSEventCompanyMerger.Convert(event);
+          this.economy.RemoveCompanyIfExists(companyEvent.GetOldCompanyID());
+        }
+
+        if(event.GetEventType() == GSEvent.ET_COMPANY_BANKRUPT)
+        {
+          local companyEvent = GSEventCompanyBankrupt.Convert(event);
+          this.economy.RemoveCompanyIfExists(companyEvent.GetCompanyID());
+        }
       }
     }
   }
@@ -117,12 +145,19 @@ function VillagesIsVillages::Save()
 
   GSLog.Info("Saved town data");
 
-  return { towns = townData };
+  return { towns = townData, economy = economy.GetSaveData() };
 }
 
 function VillagesIsVillages::Load(version, data)
 {
   local townData = [];
+
+  if(data.rawin("economy")) {
+    local economy_data = data.rawget("economy");
+    this.economy = Economy(economy_data);
+  } else {
+    this.economy = Economy(null);
+  }
 
   if(data.rawin("towns")) {
     townData = data.rawget("towns");
