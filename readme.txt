@@ -69,7 +69,14 @@ The current settings available are:
   expect a large tax bill every January! This significantly reduces the
   advantage for a player who leaves a profitable company running without
   continuing to invest in their network.
-
+* Infrastructure Cost Modifier increases the amount by which infrastructure
+  costs scale by, where 100 is no change, and 200 is the original cost 
+  squared (which is a huge increase, and almost certainly impractical for
+  gameplay). Values in the range 101 to 105 are recommended, where 105
+  is equal to (original infrastructure cost) ^ 1.05. This setting can be used
+  to increase the challenge of operating a large network, and encourages
+  careful usage of the existing routes over creating new ones. It can 
+  also be reduced below 100 for an easier game.
 
 == Large Maps ==
 

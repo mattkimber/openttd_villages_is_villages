@@ -184,6 +184,18 @@ class VillagesIsVillages extends GSInfo {
       max_value = 95,
       step_size = 5
     });
+    AddSetting({
+      name = "infrastructure_cost_exponent",
+      description = "Infrastructure Cost Modifier",
+      easy_value = 98,
+      medium_value = 100,
+      hard_value = 102,
+      custom_value = 100,
+      flags = CONFIG_INGAME,
+      min_value = 50,
+      max_value = 200,
+      step_size = 1
+    })
   }
 }
 

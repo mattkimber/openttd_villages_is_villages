@@ -68,7 +68,7 @@ function VillagesIsVillages::Start()
  
     if(GSController.GetSetting("manage_economy"))
     {
-      this.economy.ProcessCorporationTax();
+      this.economy.Process();
     }
 
     if(this.GetTick() > last_town_complete_tick + 740)

@@ -27,6 +27,28 @@ class Company
         return GSCompany.GetLoanAmount();
     }
 
+    function ApplyInfrastructureCost()
+    {
+        if(GSCompany.ResolveCompanyID(this.id) == GSCompany.COMPANY_INVALID) {
+            GSLog.Error("Attempt to resolve infrastructure costs for invalid company");
+            return;
+        }
+
+        local infrastructure_cost = 
+            GSInfrastructure.GetMonthlyInfrastructureCosts(this.id, GSInfrastructure.INFRASTRUCTURE_RAIL)
+            + GSInfrastructure.GetMonthlyInfrastructureCosts(this.id, GSInfrastructure.INFRASTRUCTURE_SIGNALS)
+            + GSInfrastructure.GetMonthlyInfrastructureCosts(this.id, GSInfrastructure.INFRASTRUCTURE_ROAD)
+            + GSInfrastructure.GetMonthlyInfrastructureCosts(this.id, GSInfrastructure.INFRASTRUCTURE_CANAL)
+            + GSInfrastructure.GetMonthlyInfrastructureCosts(this.id, GSInfrastructure.INFRASTRUCTURE_STATION)
+            + GSInfrastructure.GetMonthlyInfrastructureCosts(this.id, GSInfrastructure.INFRASTRUCTURE_AIRPORT);
+
+        local infrastructure_addon = pow(infrastructure_cost, GSController.GetSetting("infrastructure_cost_exponent").tofloat() / 100) - infrastructure_cost;
+
+        GSLog.Info("Company " + this.id + " infrastructure_cost: " + infrastructure_cost + " addon: " + infrastructure_addon);
+
+        GSCompany.ChangeBankBalance(this.id, -infrastructure_addon.tointeger(), GSCompany.EXPENSES_PROPERTY);
+    }
+
     function ApplyTax()
     {
         if(GSCompany.ResolveCompanyID(this.id) == GSCompany.COMPANY_INVALID) {
