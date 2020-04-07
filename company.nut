@@ -44,7 +44,7 @@ class Company
 
         local infrastructure_addon = pow(infrastructure_cost, GSController.GetSetting("infrastructure_cost_exponent").tofloat() / 100) - infrastructure_cost;
 
-        GSLog.Info("Company " + this.id + " infrastructure_cost: " + infrastructure_cost + " addon: " + infrastructure_addon);
+        //GSLog.Info("Company " + this.id + " infrastructure_cost: " + infrastructure_cost + " addon: " + infrastructure_addon);
 
         GSCompany.ChangeBankBalance(this.id, -infrastructure_addon.tointeger(), GSCompany.EXPENSES_PROPERTY);
     }
