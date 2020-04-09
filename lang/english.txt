@@ -19,3 +19,5 @@ STR_NULL :
 STR_CONCAT_2 :{STRING}{STRING}
 STR_CONCAT_3 :{STRING1}{STRING1}{STRING1}
 STR_CONCAT_4 :{STRING}{STRING1}{STRING1}{STRING1}
+STR_DIVIDEND :{COMPANY} has paid {NUM}% dividend to its shareholders this year, totalling {COMMA}.
+STR_NO_DIVIDEND :{COMPANY} will not issue a dividend this year.

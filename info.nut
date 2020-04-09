@@ -1,5 +1,5 @@
-SELF_VERSION <- 11;
-SELF_DATE <- "2020-04-09";
+SELF_VERSION <- 12;
+SELF_DATE <- "2020-04-10";
 
 class VillagesIsVillages extends GSInfo {
   function GetAuthor()	      { return "Timberwolf"; }
@@ -195,7 +195,67 @@ class VillagesIsVillages extends GSInfo {
       min_value = 50,
       max_value = 200,
       step_size = 1
-    })
+    });
+    AddSetting({
+      name = "dividend_floor",
+      description = "Dividends: maximum base cash surplus",
+      easy_value = 1000000,
+      medium_value = 500000,
+      hard_value = 200000,
+      custom_value = 500000,
+      flags = CONFIG_INGAME,
+      min_value = 0,
+      max_value = 25000000,
+      step_size = 100000
+    });
+    AddSetting({
+      name = "dividend_costs_years",
+      description = "Dividends: years of costs to reserve",
+      easy_value = 5,
+      medium_value = 3,
+      hard_value = 2,
+      custom_value = 3,
+      flags = CONFIG_INGAME,
+      min_value = 1,
+      max_value = 10,
+      step_size = 1
+    });
+    AddSetting({
+      name = "dividend_start",
+      description = "Dividends: initial %",
+      easy_value = 5,
+      medium_value = 20,
+      hard_value = 30,
+      custom_value = 20,
+      flags = CONFIG_INGAME,
+      min_value = 0,
+      max_value = 150,
+      step_size = 1
+    });
+    AddSetting({
+      name = "dividend_growth",
+      description = "Dividends: change per year (%)",
+      easy_value = 1,
+      medium_value = 5,
+      hard_value = 10,
+      custom_value = 5,
+      flags = CONFIG_INGAME,
+      min_value = 1,
+      max_value = 100,
+      step_size = 1
+    });
+    AddSetting({
+      name = "dividend_max",
+      description = "Dividends: maximum %",
+      easy_value = 15,
+      medium_value = 50,
+      hard_value = 80,
+      custom_value = 50,
+      flags = CONFIG_INGAME,
+      min_value = 0,
+      max_value = 150,
+      step_size = 1
+    });
   }
 }
 

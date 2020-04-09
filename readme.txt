@@ -77,6 +77,56 @@ The current settings available are:
   to increase the challenge of operating a large network, and encourages
   careful usage of the existing routes over creating new ones. It can 
   also be reduced below 100 for an easier game.
+* Dividends discourage hoarding large cash surpluses by forcing companies to
+  issue a dividend. (Note: you will currently not receive dividends from
+  companies you own shares in - this may change in future depending on game
+  balance).
+
+== Dividends ==
+
+Dividends work on a principle of avoiding large cash surpluses. When a
+company has built up enough money to pay for a few years of its expenses
+it will start to pay its surplus cash in the form of dividends, which will
+increase for each year the company operates a large cash surplus.
+
+There are several configuration values which can be used:
+
+* Maximum base cash surplus can be considered a "float" that any company
+  is allowed regardless of its operating expenses. This avoids the mechanic
+  affecting small companies with low costs that are trying to build up money
+  for a construction project. It's a good idea to set this to a reasonable
+  value for building 1-2 new routes, depending on construction and vehicle
+  costs.
+* Years of costs to reserve is how many years basic expenses (vehicle running
+  costs and infrastructure maintenance) the company should keep in hand before
+  it is considered to have a cash surplus. This is combined with the float to
+  get a total cash amount below which dividends will not be paid.
+
+When the company is considered to have a surplus, dividends will be paid.
+These will be a percentage of the available surplus, which will increase
+each year the surplus is maintained (and decrease when the company is
+not running a surplus). This is controlled by three settings:
+
+* Initial % is the amount which will be paid the first time a company
+  becomes eligible to pay dividends, and the minimum amount.
+* Change per year is the amount dividends will increase or decrease
+  by in a year.
+* Maximum % is the maximum amount of surplus cash a dividend can take.
+
+To disable the dividend mechanic, set the maximum % to 0. If the maximum
+% is equal to or less than the initial %, then the initial value will always
+be used and dividend amounts will not change.
+
+When dividends are enabled a news article will be generated showing the status
+of each company's dividend every January: whether it is paying one and how much 
+that is. Note that the quoted % is in relation to the total company value and
+not that of the surplus cash pile, so it will not match the configured percentages
+(typically being much lower for a large and valuable company).
+
+You can set dividend percentages above 100% if desired, to severely punish
+holding cash surpluses. Use with care as this can bankrupt companies if set to
+sufficiently high values.
+
 
 == Large Maps ==
 

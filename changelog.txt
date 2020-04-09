@@ -1,3 +1,7 @@
+v12:
+
+- Added dividend functionality
+
 v11:
 
 - Removal of Superlib dependency
