@@ -20,12 +20,15 @@ class Town
   next_cargo_process_tick = 0;
 
   cargoes = null;
+  cargo_helper = null;
+
 
   constructor(town_id, cargo_class) {
     this.id = town_id;
     this.is_city = GSTown.IsCity(this.id);
     this.last_growth_state = GSTown.TOWN_GROWTH_NORMAL;
     this.cargoes = cargo_class;
+    this.cargo_helper = CargoHelper();
   }
 
   function Initialise() {
@@ -111,8 +114,8 @@ class Town
     this.last_passenger_shortfall = this.passenger_shortfall;
     this.last_mail_shortfall = this.mail_shortfall;
 
-    this.passenger_shortfall = this.GetShortfall(Helper.GetPAXCargo(), "min_pax_transported");
-    this.mail_shortfall = this.GetShortfall(Helper.GetMailCargo(), "min_mail_transported");
+    this.passenger_shortfall = this.GetShortfall(this.cargo_helper.GetPAXCargo(), "min_pax_transported");
+    this.mail_shortfall = this.GetShortfall(this.cargo_helper.GetMailCargo(), "min_mail_transported");
 
     return (this.passenger_shortfall <= 0 && this.mail_shortfall <= 0);
   }

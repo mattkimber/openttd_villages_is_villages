@@ -1,3 +1,11 @@
+v11:
+
+- Removal of Superlib dependency
+
+v10:
+
+- Add economic settings
+
 v8:
 
 - Fix string processing bug
