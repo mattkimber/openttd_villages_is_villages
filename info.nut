@@ -196,6 +196,18 @@ class VillagesIsVillages extends GSInfo {
       max_value = 200,
       step_size = 1
     })
+    AddSetting({
+      name = "dividend_level",
+      description = "Dividend (%)",
+      easy_value = 0,
+      medium_value = 25,
+      hard_value = 50,
+      custom_value = 0,
+      flags = CONFIG_INGAME,
+      min_value = 0,
+      max_value = 100,
+      step_size = 5
+    });
   }
 }
 

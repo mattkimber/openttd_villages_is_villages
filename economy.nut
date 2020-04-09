@@ -77,14 +77,14 @@ class Economy
         last_infrastructure_month = GSDate.GetMonth(GSDate.GetCurrentDate());
     }
     
-    function ProcessCorporationTax()
+    function ProcessCorporationTaxAndDividends()
     {
         if(GSDate.GetYear(GSDate.GetCurrentDate()) == last_tax_year) {
             return;
         }
 
         foreach(company in this.companies_list) {
-            company.ApplyTax();
+            company.ApplyTaxAndDividends();
         }
 
         last_tax_year = GSDate.GetYear(GSDate.GetCurrentDate());
@@ -95,6 +95,6 @@ class Economy
         if(GSGameSettings.IsValid("infrastructure_maintenance") && GSGameSettings.GetValue("infrastructure_maintenance")) {
             ProcessInfrastructureCosts();
         }
-        ProcessCorporationTax();
+        ProcessCorporationTaxAndDividends();
     }
 }

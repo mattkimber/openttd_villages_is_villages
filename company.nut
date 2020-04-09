@@ -49,10 +49,10 @@ class Company
         GSCompany.ChangeBankBalance(this.id, -infrastructure_addon.tointeger(), GSCompany.EXPENSES_PROPERTY);
     }
 
-    function ApplyTax()
+    function ApplyTaxAndDividends()
     {
         if(GSCompany.ResolveCompanyID(this.id) == GSCompany.COMPANY_INVALID) {
-            GSLog.Error("Attempt to resolve tax for invalid company");
+            GSLog.Error("Attempt to resolve tax/dividends for invalid company");
             return;
         }
 
@@ -65,8 +65,28 @@ class Company
         if(tax > 0) {
             GSCompany.ChangeBankBalance(this.id, -tax, GSCompany.EXPENSES_OTHER);
         }
-        //GSLog.Info("Profit for company " + this.id + ": " + profit);
-        //GSLog.Info("Tax    for company " + this.id + ": " + tax);
+        // GSLog.Info("Profit for company " + this.id + ": " + profit);
+        // GSLog.Info("Tax    for company " + this.id + ": " + tax);
+
+        local two_year_costs = 0
+            - GSCompany.GetQuarterlyExpenses(this.id, 1)
+            - GSCompany.GetQuarterlyExpenses(this.id, 2)
+            - GSCompany.GetQuarterlyExpenses(this.id, 3)
+            - GSCompany.GetQuarterlyExpenses(this.id, 4)
+            - GSCompany.GetQuarterlyExpenses(this.id, 5)
+            - GSCompany.GetQuarterlyExpenses(this.id, 6)
+            - GSCompany.GetQuarterlyExpenses(this.id, 7)
+            - GSCompany.GetQuarterlyExpenses(this.id, 8);
+        local max_loan = GSCompany.GetMaxLoanAmount();
+        local dividend_base = max(0, bank_bal_this_year - two_year_costs - max_loan);
+        local dividends = (dividend_base * GSController.GetSetting("dividend_level")) / 100;
+        if(dividends > 0) {
+            GSCompany.ChangeBankBalance(this.id, -dividends, GSCompany.EXPENSES_OTHER);
+        }
+        // GSLog.Info("Two year costs for company " + this.id + ": " + two_year_costs);
+        // GSLog.Info("Max loan       for company " + this.id + ": " + max_loan);
+        // GSLog.Info("Dividend base  for company " + this.id + ": " + dividend_base);
+        // GSLog.Info("Dividends      for company " + this.id + ": " + dividends);
 
         this.bank_bal_last_year = GSCompany.GetBankBalance(this.id);
         this.loan_last_year = loan_this_year;
