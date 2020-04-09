@@ -61,8 +61,7 @@ class Company
         if(tax > 0) {
             GSCompany.ChangeBankBalance(this.id, -tax, GSCompany.EXPENSES_OTHER);
         }
-        
-        this.bank_bal_last_year = GSCompany.GetBankBalance(this.id);
+
         this.loan_last_year = loan_this_year;
     }
 
@@ -117,6 +116,8 @@ class Company
 
         ApplyTax();
         ApplyDividends();
+
+        this.bank_bal_last_year = GSCompany.GetBankBalance(this.id);
     }
 
     function ApplyDividend()
