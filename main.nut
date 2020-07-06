@@ -36,9 +36,11 @@ function VillagesIsVillages::Start()
 
     // Start with no  previous tax year
     this.economy = Economy(null);
+
+    GSLog.Info("Number of towns managed: " + this.towns.Count());
   }
 
-  GSLog.Info("Number of towns managed: " + this.towns.Count());
+
 
   this.industries = Industries();
 
@@ -161,7 +163,7 @@ function VillagesIsVillages::Load(version, data)
     townData = data.rawget("towns");
 
     this.towns = Towns(cargoes);
-    towns.InitialiseWithData(townData);
+    towns.SetTownData(townData);
 
     GSLog.Info("Loaded town data from save file");
 

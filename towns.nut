@@ -3,7 +3,9 @@ class Towns
   town_list = [];
   handled_towns = {};
   current_town = 0;
+  needs_data_setup = false;
   cargoes = null;
+  town_data = {};
 
   constructor(cargo_class)
   {
@@ -15,15 +17,29 @@ class Towns
     return town_list.len();
   }
 
-  function InitialiseWithData(townData)
+  function SetTownData(townData) {
+    // Need to do this to be able to load large game files
+    // with many towns
+    town_data = townData;
+    needs_data_setup = true;
+  }
+
+  function InitialiseFromData()
   {
-    foreach(t in townData)
+    local i = 0;
+
+    foreach(t in town_data)
     {
+      i++;
+
       local town = Town(t.id, this.cargoes);
       town.InitialiseWithSize(t.max_population);
       this.town_list.append(town);
       this.handled_towns[t.id] <- true;
     }
+
+    needs_data_setup = false;
+    GSLog.Info("Number of towns managed: " + this.Count());
   }
 
   function GetTownList()
@@ -43,6 +59,10 @@ class Towns
 
   function ProcessNextTown()
   {
+    if(this.needs_data_setup) {
+      InitialiseFromData();
+    }
+
     local town = this.town_list[current_town];
     town.Process();
 
