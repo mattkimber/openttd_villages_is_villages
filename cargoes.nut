@@ -7,6 +7,7 @@ class Cargoes
     GOOD = "growth_goods",
     BEER = "growth_alcohol",
     FOOD = "growth_food",
+    VEHI = "growth_vehicles",
     PETR = "growth_petrol"
   }
 

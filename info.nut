@@ -1,4 +1,4 @@
-SELF_VERSION <- 14;
+SELF_VERSION <- 15;
 SELF_DATE <- "2020-07-06";
 
 class VillagesIsVillages extends GSInfo {
@@ -163,6 +163,18 @@ class VillagesIsVillages extends GSInfo {
       max_value = 100,
       step_size = 1
     });
+    AddSetting({
+      name = "growth_vehicles",
+      description = "Maximum town growth per 100 vehicles delivered"
+      easy_value = 5,
+      medium_value = 2,
+      hard_value = 1,
+      custom_value = 1,
+      flags = CONFIG_INGAME,
+      min_value = 0,
+      max_value = 100,
+      step_size = 1
+    });    
     AddSetting({
       name = "manage_economy",
       description = "Economic settings",

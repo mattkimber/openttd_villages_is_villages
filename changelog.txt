@@ -1,3 +1,7 @@
+v15:
+
+- Add vehicles cargo as a town growth option
+
 v13:
 
 - Correct a taxation bug where dividends would reduce income tax bill
