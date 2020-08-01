@@ -31,11 +31,13 @@ function VillagesIsVillages::Start()
   if(!this.data_loaded)
   {
     GSLog.Info("Initialising towns");
-    this.towns = Towns(cargoes);
-    this.towns.UpdateTownList();
 
     // Start with no  previous tax year
     this.economy = Economy(null);
+
+    this.towns = Towns(cargoes);
+    this.towns.UpdateTownList();
+
 
     GSLog.Info("Number of towns managed: " + this.towns.Count());
   }
@@ -137,13 +139,26 @@ function VillagesIsVillages::Start()
 function VillagesIsVillages::Save()
 {
   local townData = [];
+  local cache = [];
 
   foreach(t in towns.GetTownList())
   {
     townData.append({ id = t.GetId(), max_population = t.GetMaxPopulation() });
+    if (GSController.GetOpsTillSuspend() < 200) {
+      GSLog.Warning("Not enough opcodes to process town array, cannot save complete town data. Try increasing the '#opcodes before scripts are suspended' setting.")
+      GSLog.Info("Attempting to use town data cache...")
+      cache = towns.GetTownCache();
+      if (cache.len() > townData.len()) {
+        GSLog.Info("Success!")
+        townData = cache
+      } else {
+        GSLog.Warning("Cache has not been populated yet (not all towns have been processed in this game session). Please wait longer before saving, so all towns can be processed at least once.")
+      }
+      break;
+    }
   }
 
-  GSLog.Info("Saved town data");
+  GSLog.Info("Town data: " + townData.len() + " towns saved.");
 
   return { towns = townData, economy = economy.GetSaveData() };
 }
@@ -165,7 +180,7 @@ function VillagesIsVillages::Load(version, data)
     this.towns = Towns(cargoes);
     towns.SetTownData(townData);
 
-    GSLog.Info("Loaded town data from save file");
+    GSLog.Info("Town data: " + townData.len() + " towns loaded.");
 
     this.data_loaded = true;
   }

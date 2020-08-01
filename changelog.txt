@@ -1,3 +1,7 @@
+v16:
+
+- Warn when #opcodes is too small for town list, rather than crash
+
 v15:
 
 - Add vehicles cargo as a town growth option

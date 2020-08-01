@@ -6,6 +6,7 @@ class Towns
   needs_data_setup = false;
   cargoes = null;
   town_data = {};
+  town_data_cache = [];
 
   constructor(cargo_class)
   {
@@ -27,6 +28,8 @@ class Towns
   function InitialiseFromData()
   {
     local i = 0;
+
+    this.town_list = [];
 
     foreach(t in town_data)
     {
@@ -69,6 +72,11 @@ class Towns
     current_town = (current_town + 1) % this.town_list.len();
   }
 
+  function GetTownCache()
+  {
+    return this.town_data_cache;
+  }
+
   function UpdateTownList()
   {
     local towns = GSTownList();
@@ -77,5 +85,14 @@ class Towns
     {
       this.AddTown(t);
     }
+
+    local townData = [];
+
+    foreach(t in this.GetTownList())
+    {
+      townData.append({ id = t.GetId(), max_population = t.GetMaxPopulation() });
+    }
+
+    this.town_data_cache = townData;
   }
 }
