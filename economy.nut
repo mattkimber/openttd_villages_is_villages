@@ -18,7 +18,7 @@ class Economy
             foreach(company in economy_data.companies) 
             {
                 if(!("dividend_rate" in company)) company.dividend_rate <- 0;
-                this.companies_list.append(Company(company.id, company.bank_bal, company.loan, company.dividend_rate));
+                this.companies_list.append(Company(company.id, company.bank_bal, company.loan, company.dividend_rate, company.story_page_id));
             }
         }
     }
@@ -42,7 +42,7 @@ class Economy
     {
         if(GSCompany.ResolveCompanyID(id) != GSCompany.COMPANY_INVALID) {
             local mode = GSCompanyMode(id);
-            this.companies_list.append(Company(id, GSCompany.GetBankBalance(id),  GSCompany.GetLoanAmount(), 0));
+            this.companies_list.append(Company(id, GSCompany.GetBankBalance(id),  GSCompany.GetLoanAmount(), 0, -1));
         }
     }
 

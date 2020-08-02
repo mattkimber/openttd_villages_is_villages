@@ -3,20 +3,36 @@ class Company
     bank_bal_last_year = 0;
     loan_last_year = 0;
     id = -1;
+    story_page_id = -1;
 
     current_dividend_rate = 0;
 
-    constructor(id, bank_bal, loan, dividend_rate)
+    constructor(id, bank_bal, loan, dividend_rate, story_page_id)
     {
         this.bank_bal_last_year = bank_bal;
         this.loan_last_year = loan;
         this.id = id;
         this.current_dividend_rate = dividend_rate;
+        this.story_page_id = story_page_id
+    }
+
+    function UpdateCostBreakdown(text)
+    {
+        if(!GSStoryPage.IsValidStoryPage(this.story_page_id)) {
+            this.story_page_id = GSStoryPage.New(this.id, "Cost Breakdown")
+        }
+        GSStoryPage.NewElement(this.story_page_id, GSStoryPage.SPET_TEXT, 0, text);
     }
 
     function GetSaveData()
     {
-        return { bank_bal = this.bank_bal_last_year, loan = this.loan_last_year, dividend_rate = this.current_dividend_rate, id = this.id };
+        return {
+            bank_bal = this.bank_bal_last_year,
+            loan = this.loan_last_year,
+            dividend_rate = this.current_dividend_rate,
+            id = this.id,
+            story_page_id = this.story_page_id,
+        };
     }
 
     function GetID()
@@ -60,6 +76,12 @@ class Company
 
         if(tax > 0) {
             GSCompany.ChangeBankBalance(this.id, -tax, GSCompany.EXPENSES_OTHER);
+            UpdateCostBreakdown(GSText(GSText.STR_COST_BREAKDOWN_TAX, tax));
+
+        }
+        else {
+            UpdateCostBreakdown(GSText(GSText.STR_COST_BREAKDOWN_TAX, 0));
+
         }
 
         this.loan_last_year = loan_this_year;
@@ -83,6 +105,7 @@ class Company
         if(cash_balance < dividend_cash_floor) {
             this.current_dividend_rate -= GSController.GetSetting("dividend_growth");
             ShowCompanyNews(GSText(GSText.STR_NO_DIVIDEND, this.id));
+            UpdateCostBreakdown(GSText(GSText.STR_COST_BREAKDOWN_DIVIDEND, 0, 0 ));
             return;
         }
 
@@ -92,8 +115,9 @@ class Company
 
         local effective_dividend_rate = (dividend * 100) / GSCompany.GetQuarterlyCompanyValue(this.id, GSCompany.CURRENT_QUARTER);
         GSCompany.ChangeBankBalance(this.id, -dividend, GSCompany.EXPENSES_OTHER);
+        UpdateCostBreakdown(GSText(GSText.STR_COST_BREAKDOWN_DIVIDEND, effective_dividend_rate, dividend ));
         if(dividend > 0) ShowCompanyNews(GSText(GSText.STR_DIVIDEND, this.id, effective_dividend_rate, dividend));
-
+        
         this.current_dividend_rate += GSController.GetSetting("dividend_growth");
         if(this.current_dividend_rate >= GSController.GetSetting("dividend_max")) this.current_dividend_rate = GSController.GetSetting("dividend_max");
     }
@@ -113,7 +137,9 @@ class Company
             GSLog.Error("Attempt to resolve tax for invalid company");
             return;
         }
+        local year = GSDate.GetYear(GSDate.GetCurrentDate()) - 1
 
+        UpdateCostBreakdown("________"+year+"________")
         ApplyTax();
         ApplyDividends();
 
