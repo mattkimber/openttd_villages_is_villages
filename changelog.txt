@@ -1,3 +1,7 @@
+v17:
+
+- New economic settings providing a use for taxes and dividends
+
 v16:
 
 - Warn when #opcodes is too small for town list, rather than crash
