@@ -50,6 +50,11 @@ class Town
     return this.max_population;
   }
 
+  function GetCurrentPopulation()
+  {
+    return this.current_population;
+  }
+
   function GetSize()
   {
     if(this.is_city)
@@ -154,7 +159,26 @@ class Town
     }
   }
 
-  function Process()
+  function Expand(houses) {
+    GSTown.ExpandTown(this.id, houses)
+  }
+
+  function CanGrowOnFinances(world_can_grow, max_city_population) 
+  {
+    // This is only enabled when managing the economy
+    if(!GSController.GetSetting("manage_economy")) {
+      return true;
+    }
+
+    if (this.is_city) {
+      // Cities grow based on the dividend system
+      return this.current_population < max_city_population;
+    } 
+
+    return world_can_grow
+  }
+
+  function Process(world_can_grow, max_world_population, max_city_population)
   {
     this.current_population = GSTown.GetPopulation(this.id);
     local new_growth_state = 0;
@@ -173,15 +197,19 @@ class Town
       this.ProcessDeliveredCargo();
     }
 
-    if(this.CanGrowOnPassengerAndMail() && this.CanGrowOnPopulation())
+    if(this.CanGrowOnPassengerAndMail() && this.CanGrowOnPopulation() && CanGrowOnFinances(world_can_grow, max_city_population))
     {
       // Always grow the smallest towns to prevent them getting stuck at 0 population
       new_growth_state = this.current_population == 0 ? 10 : GSTown.TOWN_GROWTH_NORMAL;
+      if (this.current_population == 0) {
+        this.Expand(1)
+      }
     }
     else
     {
       new_growth_state = GSTown.TOWN_GROWTH_NONE;
     }
+  
 
     // SetGrowthRate is pretty slow so we only change it if
     // necessary.
@@ -192,11 +220,11 @@ class Town
 
     if(GSController.GetSetting("display_text"))
     {
-      this.SetTownText();
+      this.SetTownText(world_can_grow, max_city_population);
     }
   }
 
-  function SetTownText()
+  function SetTownText(world_can_grow, max_city_population)
   {
     local percentage = (this.max_population - this.current_population) / (max(current_population / 100, 1));
 
@@ -213,14 +241,22 @@ class Town
       local passenger_text = this.passenger_shortfall > 0 ? GSText(GSText.STR_PASSENGER_SHORTFALL, this.passenger_shortfall) : GSText(GSText.STR_PASSENGER_OK, this.passenger_shortfall);
       local mail_text = this.mail_shortfall > 0 ? GSText(GSText.STR_MAIL_SHORTFALL, this.mail_shortfall) : GSText(GSText.STR_MAIL_OK, this.mail_shortfall);
 
-      local advice_text = this.GetTownGrowthAdviceString();
+      local advice_text = this.GetTownGrowthAdviceString(world_can_grow, max_city_population);
 
       GSTown.SetText(this.id, GSText(GSText.STR_CONCAT_4, prospect_text, passenger_text, mail_text, advice_text));
     }
   }
 
-  function GetTownGrowthAdviceString()
+  function GetTownGrowthAdviceString(world_can_grow, max_city_population)
   {
+    if(!world_can_grow && !this.is_city && GSController.GetSetting("manage_economy")) {
+      return GSText(GSText.STR_PAY_TAX);
+    }
+
+    if(this.is_city && this.current_population >= max_city_population && GSController.GetSetting("manage_economy")) {
+      return GSText(GSText.STR_PAY_DIVIDEND);
+    }
+
     if(this.passenger_shortfall > 0) {
       return GSText(GSText.STR_DELIVER_PASSENGERS);
     }

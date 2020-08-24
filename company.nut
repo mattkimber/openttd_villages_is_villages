@@ -4,19 +4,50 @@ class Company
     loan_last_year = 0;
     id = -1;
 
+    last_tax_bill = 0;
+    last_dividend_bill = 0;
+    last_dividend_rate = 0;
+
     current_dividend_rate = 0;
 
-    constructor(id, bank_bal, loan, dividend_rate)
+    current_story_page = null;
+    current_story_page_year = null;
+
+    constructor(id, bank_bal, loan, dividend_rate, current_story_page, current_story_page_year)
     {
         this.bank_bal_last_year = bank_bal;
         this.loan_last_year = loan;
         this.id = id;
         this.current_dividend_rate = dividend_rate;
+        this.current_story_page = current_story_page,
+        this.current_story_page_year = current_story_page_year
     }
 
     function GetSaveData()
     {
-        return { bank_bal = this.bank_bal_last_year, loan = this.loan_last_year, dividend_rate = this.current_dividend_rate, id = this.id };
+        return { 
+            bank_bal = this.bank_bal_last_year, 
+            loan = this.loan_last_year, 
+            dividend_rate = this.current_dividend_rate, 
+            id = this.id 
+            current_story_page = this.current_story_page,
+            current_story_page_year = this.current_story_page_year
+        };
+    }
+
+    function GetLastTaxBill()
+    {
+        return this.last_tax_bill;
+    }
+
+    function GetLastDividendBill()
+    {
+        return this.last_dividend_bill;
+    }
+
+        function GetLastDividendRate()
+    {
+        return this.last_dividend_rate;
     }
 
     function GetID()
@@ -60,6 +91,9 @@ class Company
 
         if(tax > 0) {
             GSCompany.ChangeBankBalance(this.id, -tax, GSCompany.EXPENSES_OTHER);
+            this.last_tax_bill = tax;
+        } else {
+            this.last_tax_bill = 0;
         }
 
         this.loan_last_year = loan_this_year;
@@ -81,8 +115,9 @@ class Company
         local dividend_cash_floor = GSController.GetSetting("dividend_floor") + (total_expenses * GSController.GetSetting("dividend_costs_years"));
 
         if(cash_balance < dividend_cash_floor) {
+            this.last_dividend_bill = 0;
+            this.last_dividend_rate = 0;
             this.current_dividend_rate -= GSController.GetSetting("dividend_growth");
-            ShowCompanyNews(GSText(GSText.STR_NO_DIVIDEND, this.id));
             return;
         }
 
@@ -91,11 +126,36 @@ class Company
         local dividend = ((cash_balance - dividend_cash_floor) * this.current_dividend_rate) / 100;
 
         local effective_dividend_rate = (dividend * 100) / GSCompany.GetQuarterlyCompanyValue(this.id, GSCompany.CURRENT_QUARTER);
+        this.last_dividend_rate = effective_dividend_rate;
+
         GSCompany.ChangeBankBalance(this.id, -dividend, GSCompany.EXPENSES_OTHER);
-        if(dividend > 0) ShowCompanyNews(GSText(GSText.STR_DIVIDEND, this.id, effective_dividend_rate, dividend));
+        if(dividend > 0) {
+            this.last_dividend_bill = dividend;
+            this.GrowCompanyHomeTown(dividend);
+        } else {
+            this.last_dividend_bill = 0;
+        }
 
         this.current_dividend_rate += GSController.GetSetting("dividend_growth");
         if(this.current_dividend_rate >= GSController.GetSetting("dividend_max")) this.current_dividend_rate = GSController.GetSetting("dividend_max");
+    }
+
+    function GrowCompanyHomeTown(dividend) {
+
+        local houses_per_dividend =  GSController.GetSetting("houses_per_dividend");
+        local houses = (((houses_per_dividend) * (dividend / 100000)) / 10);
+
+        if (houses <= 0)
+        {
+            return;
+        }
+
+        // Find the company's HQ
+        local hq_location = GSCompany.GetCompanyHQ(this.id);
+        if(hq_location != GSMap.TILE_INVALID) {
+            local town = GSTile.GetClosestTown(hq_location);
+            GSTown.ExpandTown(town, houses);
+        }
     }
 
     function ShowCompanyNews(text)
@@ -116,12 +176,28 @@ class Company
 
         ApplyTax();
         ApplyDividends();
+        AddCompanyNewsPage();
 
         this.bank_bal_last_year = GSCompany.GetBankBalance(this.id);
     }
 
-    function ApplyDividend()
+    function AddCompanyNewsPage()
     {
+        local tax_year = GSDate.GetYear(GSDate.GetCurrentDate()) - 1;
 
+        if(this.current_story_page == null || this.current_story_page_year  == null || tax_year > this.current_story_page_year + 9) {
+            this.current_story_page_year = tax_year; 
+            this.current_story_page = GSStoryPage.New(
+                this.id, 
+                GSText(GSText.STR_HISTORICAL_FINANCES,this.current_story_page_year,this.current_story_page_year+9));
+        }
+
+
+        GSStoryPage.NewElement(
+            this.current_story_page, 
+            GSStoryPage.SPET_TEXT, 
+            0, 
+            GSText(GSText.STR_HISTORY, tax_year, this.last_tax_bill, this.last_dividend_bill, this.last_dividend_rate ));
     }
+
 }

@@ -71,6 +71,14 @@ function VillagesIsVillages::Start()
     if(GSController.GetSetting("manage_economy"))
     {
       this.economy.Process();
+      
+      if(GSController.GetSetting("manage_economy")) {
+        local max_additional_world_population = this.economy.GetMaxAdditionalWorldPopulation();
+        local max_city_population = this.economy.GetMaxCityPopulation();
+        this.towns.UpdateWorldPopulation(max_additional_world_population, max_city_population);
+      } else {
+        this.towns.EnableUnlimitedWorldGrowth();
+      }
     }
 
     if(this.GetTick() > last_town_complete_tick + 740)
@@ -160,12 +168,13 @@ function VillagesIsVillages::Save()
 
   GSLog.Info("Town data: " + townData.len() + " towns saved.");
 
-  return { towns = townData, economy = economy.GetSaveData() };
+  return { towns = townData, baseline_population = towns.GetBaselinePopulation(), economy = economy.GetSaveData() };
 }
 
 function VillagesIsVillages::Load(version, data)
 {
   local townData = [];
+  local baseline_population = 0;
 
   if(data.rawin("economy")) {
     local economy_data = data.rawget("economy");
@@ -174,11 +183,15 @@ function VillagesIsVillages::Load(version, data)
     this.economy = Economy(null);
   }
 
+  if(data.rawin("baseline_population")) {
+    baseline_population = data.baseline_population;
+  }
+
   if(data.rawin("towns")) {
     townData = data.rawget("towns");
 
     this.towns = Towns(cargoes);
-    towns.SetTownData(townData);
+    towns.SetTownData(townData, baseline_population);
 
     GSLog.Info("Town data: " + townData.len() + " towns loaded.");
 

@@ -81,6 +81,7 @@ The current settings available are:
   issue a dividend. (Note: you will currently not receive dividends from
   companies you own shares in - this may change in future depending on game
   balance).
+* Tax and dividend modifiers on population.
 
 == Dividends ==
 
@@ -127,6 +128,51 @@ You can set dividend percentages above 100% if desired, to severely punish
 holding cash surpluses. Use with care as this can bankrupt companies if set to
 sufficiently high values.
 
+== Taxation, Dividends and Population ==
+
+[Applies when "Economic settings" are set to "on"]
+
+Local authorities require income from taxation to provide services and support
+local businesses. Cities require stock market profits or a successful local
+company to grow.
+
+Villages Is Villages assumes that when you generate a world, it is already
+self-sufficient with a little room for growth (we're not that evil). However 
+to grow larger it will need to generate taxes from economic activity. As 
+your company and competitors pay larger amounts of corporation tax, the 
+maximum world population at which towns can still grow increases.
+
+Beware, though! If tax receipts fall over a long enough period, town growth
+will stall. You'll see a reminder of this on the town window. To help your
+towns become bustling metropolises, either make more profit or increase the
+rate of corporation tax in the script settings. There's also a setting to
+change the population limit increase per 1,000 tax paid if you want an
+easier (or harder) time growing towns.
+
+Changes in tax receipts don't affect growth instantly; it takes time for
+local authorities to make their investment plans. This works both ways, so
+while it takes a while to see the positive results from your record tax bills
+you can also have a bad year or two without housebuilding coming to a halt.
+
+Cities are not affected by this limit - they grow based on dividend income.
+To start growing cities, you'll need to build your company's cash reserves
+up to the point you start paying dividends. Bigger dividends mean larger
+cities, but if they shrink so will the cities. Unlike tax the cities react
+much faster to changes in dividend income, and it only takes a couple of
+bad years for the skyscrapers to stop going up.
+
+Note that while cities are not affected by the tax-influenced world population
+limit, their population still counts toward it. If you pay large dividends 
+while minimising your tax bill, vibrant cities will be offset by moribund 
+towns.
+
+Finally, the town closest to your HQ will benefit from *immediate* growth
+when your company pays a large enough dividend. Think of it as a mini-boom
+from all those employee bonuses being spent locally. While good early on,
+this can be a hindrance if your erstwhile home village has become a concrete
+jungle full of overloaded trains and wheezing buses. You may need to block 
+further expansion... or perhaps relocate your HQ to provide an economic
+stimulus for a neglected backwater?
 
 == Large Maps ==
 

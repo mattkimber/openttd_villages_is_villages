@@ -1,5 +1,5 @@
-SELF_VERSION <- 16;
-SELF_DATE <- "2020-08-02";
+SELF_VERSION <- 17;
+SELF_DATE <- "2020-08-23";
 
 class VillagesIsVillages extends GSInfo {
   function GetAuthor()	      { return "Timberwolf"; }
@@ -268,6 +268,42 @@ class VillagesIsVillages extends GSInfo {
       max_value = 150,
       step_size = 1
     });
+    AddSetting({
+      name = "population_per_tax",
+      description = "Additional world population supported per 1,000 tax paid by transport companies",
+      easy_value = 500,
+      medium_value = 200,
+      hard_value = 100,
+      custom_value = 200,
+      flags = CONFIG_INGAME,
+      min_value = 0,
+      max_value = 10000,
+      step_size = 100
+    });
+    AddSetting({
+      name = "population_per_dividend",
+      description = "City size supported per 100,000 dividend paid by transport companies",
+      easy_value = 5000,
+      medium_value = 2000,
+      hard_value = 500,
+      custom_value = 200,
+      flags = CONFIG_INGAME,
+      min_value = 0,
+      max_value = 10000,
+      step_size = 100
+    });
+    AddSetting({
+      name = "houses_per_dividend",
+      description = "Home city expansion per 1,000,000 dividend paid by local transport company",
+      easy_value = 10,
+      medium_value = 5,
+      hard_value = 2,
+      custom_value = 5,
+      flags = CONFIG_INGAME,
+      min_value = 0,
+      max_value = 50,
+      step_size = 1
+    });           
   }
 }
 

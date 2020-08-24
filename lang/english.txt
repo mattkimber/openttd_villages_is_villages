@@ -19,5 +19,10 @@ STR_NULL :
 STR_CONCAT_2 :{STRING}{STRING}
 STR_CONCAT_3 :{STRING1}{STRING1}{STRING1}
 STR_CONCAT_4 :{STRING}{STRING1}{STRING1}{STRING1}
-STR_DIVIDEND :{COMPANY} has paid {NUM}% dividend to its shareholders this year, totalling {COMMA}.
-STR_NO_DIVIDEND :{COMPANY} will not issue a dividend this year.
+STR_DIVIDEND :{COMPANY} has paid a record {CURRENCY_LONG} to its shareholders this year from a {NUM}% dividend. Cities look forward to extra investment.
+STR_TAX_DOWN :Corporation tax receipts down {NUM}% from last year.{}{}Government rumoured to be planning cuts to regional development funds.
+STR_TAX_UP :Tax windfall! Corporation tax receipts are up {COMMA}% from last year.{}{}New investment in public services and regional development funds announced.
+STR_PAY_TAX :{}{}More tax income is needed to support population growth
+STR_PAY_DIVIDEND :{}{}Pay larger shareholder dividends to make this city grow
+STR_HISTORY :{DKGREEN}Tax year {NUM} ->{BLACK} Tax paid: {GOLD}{CURRENCY_LONG}{BLACK} / Dividend paid: {GOLD}{CURRENCY_LONG}{BLACK} ({ORANGE}{NUM}%{BLACK})
+STR_HISTORICAL_FINANCES :{SILVER}Company Finances {NUM}-{NUM}
