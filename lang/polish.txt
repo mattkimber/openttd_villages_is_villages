@@ -1,0 +1,28 @@
+STR_GROWTH_UNLIMITED :Miasta nie mają limitu wzrostu.{}
+STR_GROWTH_OUTSTANDING :Perspektywy wzrostu: {ORANGE}Niezwykłe{BLACK} {}
+STR_GROWTH_EXCELLENT :Perspektywy wzrostu: {ORANGE}Wspaniałe{BLACK} {}
+STR_GROWTH_VERYGOOD :Perspektywy wzrostu: {ORANGE}Bardzo dobre{BLACK} {}
+STR_GROWTH_GOOD :Perspektywy wzrostu: {ORANGE}Dobre{BLACK} {}
+STR_GROWTH_MEDIOCRE :Perspektywy wzrostu: {ORANGE}Przeciętne{BLACK} {}
+STR_GROWTH_POOR :Perspektywy wzrostu: {ORANGE}Słabe{BLACK} {}
+STR_GROWTH_VERYPOOR :Perspektywy wzrostu: {ORANGE}Bardzo słabe{BLACK} {}
+STR_GROWTH_NONE :Perspektywy wzrostu: {RED}Brak{BLACK} {}
+STR_PASSENGER_SHORTFALL :Niedobór pasażerów: {RED}{NUM}{BLACK} {}
+STR_MAIL_SHORTFALL :Niedobór poczty: {RED}{NUM}{BLACK}
+STR_PASSENGER_OK :Niedobór pasażerów: {ORANGE}{NUM}{BLACK} {}
+STR_MAIL_OK :Niedobór poczty: {ORANGE}{NUM}{BLACK}
+STR_DELIVER_PASSENGERS :{}{}Przewieź więcej pasażerów, aby to miasto się rozwijało
+STR_DELIVER_MAIL :{}{}Przewieź więcej poczty, aby to miasto się rozwijało
+STR_DELIVER_CARGO :{}{}Dostarcz {CARGO_LIST}, aby to miasto się rozwijało
+STR_FUND_BUILDINGS :{}{}Ufunduj budynki, aby to miasto się rozwijało
+STR_NULL :
+STR_CONCAT_2 :{STRING}{STRING}
+STR_CONCAT_3 :{STRING1}{STRING1}{STRING1}
+STR_CONCAT_4 :{STRING}{STRING1}{STRING1}{STRING1}
+STR_DIVIDEND :{COMPANY} wypłaciła w tym roku swoim akcjonariuszom rekordową kwotę {CURRENCY_LONG} z {NUM}% dywidendy. Miasta oczekują dodatkowych inwestycji.
+STR_TAX_DOWN :Wpływy z podatków od przedsiębiorstw spadły o {NUM}% w porównaniu z zeszłym rokiem.{}{}Mówi się, że rząd planuje cięcia w funduszach rozwoju regionalnego.
+STR_TAX_UP :Gratka podatkowa! Wpływy z podatku od osób prawnych wzrosły o {COMMA}% w porównaniu z zeszłym rokiem.{}{}Ogłoszono nowe inwestycje w usługi publiczne i fundusze rozwoju regionalnego.
+STR_PAY_TAX :{}{}Potrzeba więcej dochodów z podatków, aby wesprzeć wzrost populacji.
+STR_PAY_DIVIDEND :{}{}Wypłacaj więcej dywident akcjonariuszom, aby to miasto się rozwijało.
+STR_HISTORY :{DKGREEN}Rok podatkowy {NUM} ->{BLACK} Zapłacony podatek: {GOLD}{CURRENCY_LONG}{BLACK} / Wypłacone dywidendy: {GOLD}{CURRENCY_LONG}{BLACK} ({ORANGE}{NUM}%{BLACK})
+STR_HISTORICAL_FINANCES :{SILVER}Finanse firmy {NUM}-{NUM}
