@@ -199,4 +199,4 @@ huge number of them on the map.
 
 Code: Timberwolf
 
-Translations: SilverSurferZzZ (ES)
+Translations: SilverSurferZzZ (ES), BolfriPL (PL)

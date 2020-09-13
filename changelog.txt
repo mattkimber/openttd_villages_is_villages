@@ -1,3 +1,7 @@
+v18:
+
+- Polish language translation
+
 v17:
 
 - New economic settings providing a use for taxes and dividends
