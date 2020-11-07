@@ -1,4 +1,4 @@
-SELF_VERSION <- 19;
+SELF_VERSION <- 20;
 SELF_DATE <- "2020-11-07";
 
 class VillagesIsVillages extends GSInfo {

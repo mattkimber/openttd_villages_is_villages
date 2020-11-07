@@ -146,7 +146,7 @@ class Economy
         this.total_tax_paid = ((this.total_tax_paid * 4) + tax) / 5;
 
         // Show news articles
-        if (this.tax_last_year > 0) {
+        if ((this.tax_last_year / 100) > 0) {
             local tax_pc_change = tax / (this.tax_last_year / 100);
 
             if(tax_pc_change < 80) {
