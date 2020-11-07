@@ -1,3 +1,7 @@
+v19:
+
+- Fix division by zero when small amounts of total tax are paid
+
 v18:
 
 - Polish language translation
