@@ -1,5 +1,5 @@
-SELF_VERSION <- 20;
-SELF_DATE <- "2020-11-07";
+SELF_VERSION <- 21;
+SELF_DATE <- "2020-11-20";
 
 class VillagesIsVillages extends GSInfo {
   function GetAuthor()	      { return "Timberwolf"; }
@@ -221,15 +221,15 @@ class VillagesIsVillages extends GSInfo {
       step_size = 100000
     });
     AddSetting({
-      name = "dividend_costs_years",
-      description = "Dividends: years of costs to reserve",
-      easy_value = 5,
-      medium_value = 3,
-      hard_value = 2,
-      custom_value = 3,
+      name = "dividend_costs_quarters",
+      description = "Dividends: quarters of costs to reserve (4 = 1 year)",
+      easy_value = 20,
+      medium_value = 12,
+      hard_value = 6,
+      custom_value = 12,
       flags = CONFIG_INGAME,
-      min_value = 1,
-      max_value = 10,
+      min_value = 0,
+      max_value = 40,
       step_size = 1
     });
     AddSetting({

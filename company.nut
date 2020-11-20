@@ -112,7 +112,7 @@ class Company
             }
         }
         
-        local dividend_cash_floor = GSController.GetSetting("dividend_floor") + (total_expenses * GSController.GetSetting("dividend_costs_years"));
+        local dividend_cash_floor = GSController.GetSetting("dividend_floor") + ((total_expenses * GSController.GetSetting("dividend_costs_quarters")) / 4);
 
         if(cash_balance < dividend_cash_floor) {
             this.last_dividend_bill = 0;
