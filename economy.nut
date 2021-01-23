@@ -132,9 +132,10 @@ class Economy
         foreach(company in this.companies_list) {
             company.ApplyTaxAndDividends();
 
-            if(company.GetLastDividendBill() > this.record_dividend) {
-                company.ShowCompanyNews(GSText(GSText.STR_DIVIDEND, company.GetID(), company.GetLastDividendBill(), company.GetLastDividendRate()));
-                this.record_dividend = company.GetLastDividendBill();
+            local dividendBill = company.GetLastDividendBill();
+            if(dividendBill > 0 && dividendBill > this.record_dividend) {
+                company.ShowCompanyNews(GSText(GSText.STR_DIVIDEND, company.GetID(), dividendBill, company.GetLastDividendRate()));
+                this.record_dividend = dividendBill;
             }
 
             tax += company.GetLastTaxBill();
