@@ -24,7 +24,7 @@ class Economy
                 this.total_tax_paid = economy_data.total_tax_paid;
             }
 
-            if(economy_data.rawin("total_dividends")) {
+            if(economy_data.rawin("total_dividends")) {       
                 this.total_dividends = economy_data.total_dividends;
             }
 
@@ -43,6 +43,7 @@ class Economy
                 if(!("current_story_page_year" in company)) company.current_story_page_year <- null;
                 this.companies_list.append(Company(company.id, company.bank_bal, company.loan, company.dividend_rate, company.current_story_page, company.current_story_page_year));
             }
+
         }
     }
 
@@ -139,7 +140,7 @@ class Economy
             }
 
             tax += company.GetLastTaxBill();
-            dividends += company.GetLastDividendBill();
+            dividends += dividendBill;
         }
 
         // Calculate the rolling total for tax
