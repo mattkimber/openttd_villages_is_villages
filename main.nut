@@ -176,23 +176,29 @@ function VillagesIsVillages::Load(version, data)
   local townData = [];
   local baseline_population = 0;
 
+  GSLog.Info("Loading save created by version " + version);
+
+
   if(data.rawin("economy")) {
     local economy_data = data.rawget("economy");
     this.economy = Economy(economy_data);
+    GSLog.Info("Found economy data in save file");
   } else {
     this.economy = Economy(null);
+    GSLog.Info("No economy data found - initialising new economy")
   }
 
   if(data.rawin("baseline_population")) {
     baseline_population = data.baseline_population;
+    GSLog.Info("Found baseline population data in save file");
   }
 
   if(data.rawin("towns")) {
     townData = data.rawget("towns");
-
     this.towns = Towns(cargoes);
     towns.SetTownData(townData, baseline_population);
-
+    
+    GSLog.Info("Found town data in save file");
     GSLog.Info("Town data: " + townData.len() + " towns loaded.");
 
     this.data_loaded = true;

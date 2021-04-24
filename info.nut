@@ -1,14 +1,15 @@
-SELF_VERSION <- 22;
-SELF_DATE <- "2021-01-23";
+SELF_VERSION <- 23;
+SELF_DATE <- "2021-04-24";
 
 class VillagesIsVillages extends GSInfo {
   function GetAuthor()	      { return "Timberwolf"; }
   function GetName()			    { return "Villages Is Villages"; }
-  function GetDescription()   { return "Keep villages as villages! Control town and industry growth, with added bonus economy settings. Translations: SilverSurferZzZ (ES)"; }
+  function GetDescription()   { return "Keep villages as villages! Control town and industry growth, with added bonus economy settings."; }
   function GetVersion()		    { return SELF_VERSION; }
   function GetDate()			    { return SELF_DATE; }
   function CreateInstance()	  { return "VillagesIsVillages"; }
   function GetShortName()		  { return "VIsV"; }
+  function MinVersionToLoad()  { return 3; }
   function GetAPIVersion()	  { return "1.5"; }
   function GetUrl()			      { return "https://github.com/mattkimber/openttd_villages_is_villages"; }
   function GetSettings()

@@ -1,3 +1,16 @@
+v23:
+
+- Fix towns not growing after save/load cycles (particularly on large maps)
+- Allow loading games created with older script versions
+
+v22:
+
+- Don't announce zero dividends when record dividend figure is broken
+
+v21:
+
+- Allow setting dividend calculation by quarters, not whole years
+
 v20:
 
 - Fix division by zero when small amounts of total tax are paid

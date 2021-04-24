@@ -14,8 +14,9 @@ class Town
   last_passenger_shortfall = -1;
   last_mail_shortfall = -1;
   last_growth_prospect = -1;
-  last_growth_state = 0;
+  last_growth_state = GSTown.TOWN_GROWTH_NORMAL;
   last_needed_cargo = 0;
+  use_cached_growth_value = false;
 
   next_cargo_process_tick = 0;
 
@@ -26,7 +27,6 @@ class Town
   constructor(town_id, cargo_class) {
     this.id = town_id;
     this.is_city = GSTown.IsCity(this.id);
-    this.last_growth_state = GSTown.TOWN_GROWTH_NORMAL;
     this.cargoes = cargo_class;
     this.cargo_helper = CargoHelper();
   }
@@ -181,7 +181,7 @@ class Town
   function Process(world_can_grow, max_world_population, max_city_population)
   {
     this.current_population = GSTown.GetPopulation(this.id);
-    local new_growth_state = 0;
+    local new_growth_state = GSTown.TOWN_GROWTH_NONE;
 
     // If the player is funding buildings and we hit the limit then we increase the maximum population by 20% + 1
     // over the current population
@@ -205,17 +205,14 @@ class Town
         this.Expand(1)
       }
     }
-    else
-    {
-      new_growth_state = GSTown.TOWN_GROWTH_NONE;
-    }
   
-
     // SetGrowthRate is pretty slow so we only change it if
-    // necessary.
-    if(new_growth_state != this.last_growth_state) {
+    // necessary - if it is actually different, or if this
+    // is the first time we are changing after game load.
+    if(!this.use_cached_growth_value || new_growth_state != this.last_growth_state) {
       GSTown.SetGrowthRate(this.id, new_growth_state);
       this.last_growth_state = new_growth_state;
+      this.use_cached_growth_value = true;
     }
 
     if(GSController.GetSetting("display_text"))
