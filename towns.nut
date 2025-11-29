@@ -13,6 +13,7 @@ class Towns
   world_can_grow = false;
   max_population = 0;
   max_city_population = 0;
+  start_date = -1;
 
   constructor(cargo_class)
   {
@@ -44,9 +45,14 @@ class Towns
 
   function UpdateWorldPopulation(max_additional_population, max_city_population) 
   { 
+    if(this.start_date == -1) {
+      this.start_date = GSDate.GetCurrentDate();
+    }
+
     this.world_population = GetPopulation();
 
-    if(this.baseline_world_population == 0 && GSDate.GetMonth(GSDate.GetCurrentDate()) >= 4) {
+    if(this.baseline_world_population == 0 && GSDate.GetCurrentDate() > (this.start_date + 30)) {
+      
         // World population is quite unstable when starting a game,
         // give it plenty of time to settle down.
         this.world_population = GetPopulation();
