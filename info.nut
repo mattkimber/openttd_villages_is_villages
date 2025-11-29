@@ -1,5 +1,5 @@
-SELF_VERSION <- 23;
-SELF_DATE <- "2021-04-24";
+SELF_VERSION <- 25;
+SELF_DATE <- "2025-11-29";
 
 class VillagesIsVillages extends GSInfo {
   function GetAuthor()	      { return "Timberwolf"; }
@@ -9,8 +9,8 @@ class VillagesIsVillages extends GSInfo {
   function GetDate()			    { return SELF_DATE; }
   function CreateInstance()	  { return "VillagesIsVillages"; }
   function GetShortName()		  { return "VIsV"; }
-  function MinVersionToLoad()  { return 3; }
-  function GetAPIVersion()	  { return "1.5"; }
+  function MinVersionToLoad()  { return 25; }
+  function GetAPIVersion()	  { return "14"; }
   function GetUrl()			      { return "https://github.com/mattkimber/openttd_villages_is_villages"; }
   function GetSettings()
   {
@@ -223,7 +223,7 @@ class VillagesIsVillages extends GSInfo {
     });
     AddSetting({
       name = "dividend_costs_quarters",
-      description = "Dividends: quarters of costs to reserve (4 = 1 year)",
+      description = "Dividends: economic quarters of costs to reserve (4 = 1 year)",
       easy_value = 20,
       medium_value = 12,
       hard_value = 6,
@@ -304,7 +304,16 @@ class VillagesIsVillages extends GSInfo {
       min_value = 0,
       max_value = 50,
       step_size = 1
-    });           
+    });
+    AddSetting({
+      name = "attempt_to_get_real_economy_year",
+      description = "[Experimental] Use calendar time for calculating tax/dividends",
+      easy_value = 0,
+      medium_value = 0,
+      hard_value = 0,
+      custom_value = 0,
+      flags = CONFIG_BOOLEAN
+    });          
   }
 }
 

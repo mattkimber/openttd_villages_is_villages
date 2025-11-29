@@ -78,7 +78,7 @@ class Company
 
         local infrastructure_addon = pow(infrastructure_cost, GSController.GetSetting("infrastructure_cost_exponent").tofloat() / 100) - infrastructure_cost;
 
-        GSCompany.ChangeBankBalance(this.id, -infrastructure_addon.tointeger(), GSCompany.EXPENSES_PROPERTY);
+        GSCompany.ChangeBankBalance(this.id, -infrastructure_addon.tointeger(), GSCompany.EXPENSES_PROPERTY, GSMap.TILE_INVALID);
     }
 
     function ApplyTax()
@@ -90,7 +90,7 @@ class Company
         local tax = (profit * GSController.GetSetting("corp_tax_level")) / 100;
 
         if(tax > 0) {
-            GSCompany.ChangeBankBalance(this.id, -tax, GSCompany.EXPENSES_OTHER);
+            GSCompany.ChangeBankBalance(this.id, -tax, GSCompany.EXPENSES_OTHER, GSMap.TILE_INVALID);
             this.last_tax_bill = tax;
         } else {
             this.last_tax_bill = 0;
@@ -128,7 +128,7 @@ class Company
         local effective_dividend_rate = (dividend * 100) / GSCompany.GetQuarterlyCompanyValue(this.id, GSCompany.CURRENT_QUARTER);
         this.last_dividend_rate = effective_dividend_rate;
 
-        GSCompany.ChangeBankBalance(this.id, -dividend, GSCompany.EXPENSES_OTHER);
+        GSCompany.ChangeBankBalance(this.id, -dividend, GSCompany.EXPENSES_OTHER, GSMap.TILE_INVALID);
         if(dividend > 0) {
             this.last_dividend_bill = dividend;
             this.GrowCompanyHomeTown(dividend);
@@ -167,7 +167,7 @@ class Company
         }
     }
 
-    function ApplyTaxAndDividends()
+    function ApplyTaxAndDividends(tax_year)
     {
         if(GSCompany.ResolveCompanyID(this.id) == GSCompany.COMPANY_INVALID) {
             GSLog.Error("Attempt to resolve tax for invalid company");
@@ -176,28 +176,34 @@ class Company
 
         ApplyTax();
         ApplyDividends();
-        AddCompanyNewsPage();
+        AddCompanyNewsPage(tax_year);
 
         this.bank_bal_last_year = GSCompany.GetBankBalance(this.id);
     }
 
-    function AddCompanyNewsPage()
+    function AddCompanyNewsPage(tax_year)
     {
-        local tax_year = GSDate.GetYear(GSDate.GetCurrentDate()) - 1;
-
-        if(this.current_story_page == null || this.current_story_page_year  == null || tax_year > this.current_story_page_year + 9) {
-            this.current_story_page_year = tax_year; 
+        if(this.current_story_page == null || this.current_story_page_year  == null || tax_year > this.current_story_page_year + 10) {
+            this.current_story_page_year = tax_year - 1; 
             this.current_story_page = GSStoryPage.New(
                 this.id, 
                 GSText(GSText.STR_HISTORICAL_FINANCES,this.current_story_page_year,this.current_story_page_year+9));
         }
 
 
-        GSStoryPage.NewElement(
-            this.current_story_page, 
-            GSStoryPage.SPET_TEXT, 
-            0, 
-            GSText(GSText.STR_HISTORY, tax_year, this.last_tax_bill, this.last_dividend_bill, this.last_dividend_rate ));
+        if(GSController.GetSetting("attempt_to_get_real_economy_year")) {
+            GSStoryPage.NewElement(
+                this.current_story_page, 
+                GSStoryPage.SPET_TEXT, 
+                0, 
+                GSText(GSText.STR_HISTORY, tax_year - 1, this.last_tax_bill, this.last_dividend_bill, this.last_dividend_rate ));
+        } else {
+            GSStoryPage.NewElement(
+                this.current_story_page, 
+                GSStoryPage.SPET_TEXT, 
+                0, 
+                GSText(GSText.STR_HISTORY_ALT, tax_year - 1, this.last_tax_bill, this.last_dividend_bill, this.last_dividend_rate ));
+        }
     }
 
 }

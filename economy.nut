@@ -2,6 +2,7 @@ class Economy
 {
     last_process_year = -1;
     last_process_month = -1;
+    last_economy_date = -1;
     total_tax_paid = 0;
     total_dividends = 0;
     record_dividend = 0;
@@ -125,13 +126,13 @@ class Economy
         return (population_per_dividend / 100) * (this.total_dividends / 1000);
     }
     
-    function ProcessTaxAndDividends()
+    function ProcessTaxAndDividends(tax_year)
     {
         local tax = 0;
         local dividends = 0;
 
         foreach(company in this.companies_list) {
-            company.ApplyTaxAndDividends();
+            company.ApplyTaxAndDividends(tax_year);
 
             local dividendBill = company.GetLastDividendBill();
             if(dividendBill > 0 && dividendBill > this.record_dividend) {
@@ -166,19 +167,76 @@ class Economy
         this.total_dividends = (this.total_dividends + dividends) / 2;
     }
 
+    function GetCurrentYear()
+    {
+        local economy_date = GSDate.GetCurrentDate();
+        local economy_year = GSDate.GetYear(economy_date);
+        local adjusted_economy_date = economy_date / 10;
+
+        if(!GSController.GetSetting("attempt_to_get_real_economy_year")) {
+            return economy_year - 1919;
+        }
+
+        if (adjusted_economy_date == last_economy_date && last_economy_date != -1) {
+            return last_process_year;
+        }
+
+        // GSLog.Info("Economy year: " + economy_year);
+        // GSLog.Info("Economy date: " + economy_date + " (adjusted: " + adjusted_economy_date + ")");
+
+        last_economy_date = adjusted_economy_date;
+
+        local new_page = GSStoryPage.New(GSCompany.COMPANY_INVALID, "");
+        local calendar_date = GSStoryPage.GetDate(new_page);
+        GSStoryPage.Remove(new_page);
+
+        // We need to identify the date manually as GetDate() will assume an
+        // economy date with no leap year
+        local current_year = 0;
+        local days_in_year = 0;
+
+
+        // GSLog.Info("Calendar date " + calendar_date);
+
+        // Reuced # of iterations required for post-1700 dates
+        if(calendar_date >= 620913) {
+            current_year = 1700;
+            calendar_date = calendar_date - 620913;
+        }
+
+        while(true) {
+            if(current_year % 4 == 0 && current_year % 100 != 0) {
+                days_in_year = 366;
+            } else {
+                days_in_year = 365;
+            }
+
+            if(calendar_date < days_in_year) {
+                break;
+            }
+
+            calendar_date = calendar_date - days_in_year;
+            current_year++;
+        }
+
+        // GSLog.Info("Current year " + current_year);
+        return current_year;
+    }
+
     function ProcessAnnual()
     {
-        if(GSDate.GetYear(GSDate.GetCurrentDate()) == last_process_year) {
+        local current_year = GetCurrentYear();
+
+        if(current_year == last_process_year) {
             return;
         }
 
-        ProcessTaxAndDividends();
-        last_process_year = GSDate.GetYear(GSDate.GetCurrentDate());
+        ProcessTaxAndDividends(current_year);
+        last_process_year = current_year;
     }
 
     function Process()
     {
-
         ProcessAnnual();
     }
 }

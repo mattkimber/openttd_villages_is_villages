@@ -1,0 +1,29 @@
+STR_GROWTH_UNLIMITED :Städer har ingen tillväxtgräns{}
+STR_GROWTH_OUTSTANDING :Tillväxtutsikter: {ORANGE}Enastående{BLACK} {}
+STR_GROWTH_EXCELLENT :Tillväxtutsikter: {ORANGE}Utmärkta{BLACK} {}
+STR_GROWTH_VERYGOOD :Tillväxtutsikter: {ORANGE}Väldigt bra{BLACK} {}
+STR_GROWTH_GOOD :Tillväxtutsikter: {ORANGE}Bra{BLACK} {}
+STR_GROWTH_MEDIOCRE :Tillväxtutsikter: {ORANGE}Medelmåttiga{BLACK} {}
+STR_GROWTH_POOR :Tillväxtutsikter: {ORANGE}Dåliga{BLACK} {}
+STR_GROWTH_VERYPOOR :Tillväxtutsikter: {ORANGE}Väldigt dåliga{BLACK} {}
+STR_GROWTH_NONE :Tillväxtutsikter: {RED}Inga{BLACK} {}
+STR_PASSENGER_SHORTFALL :Underskott av passagerare: {RED}{NUM}{BLACK} {}
+STR_MAIL_SHORTFALL :Underskott av post: {RED}{NUM}{BLACK}
+STR_PASSENGER_OK :Underskott av passagerare: {ORANGE}{NUM}{BLACK} {}
+STR_MAIL_OK :Underskott av post: {ORANGE}{NUM}{BLACK}
+STR_DELIVER_PASSENGERS :{}{}Transportera fler passagerare för att få den här orten att växa
+STR_DELIVER_MAIL :{}{}Transportera mer post för att få den här orten att växa
+STR_DELIVER_CARGO :{}{}Leverera {CARGO_LIST} för att få den här orten att växa
+STR_FUND_BUILDINGS :{}{}Bekosta nya byggnader för att få den här orten att växa
+STR_NULL :
+STR_CONCAT_2 :{STRING}{STRING}
+STR_CONCAT_3 :{STRING1}{STRING1}{STRING1}
+STR_CONCAT_4 :{STRING}{STRING1}{STRING1}{STRING}
+STR_DIVIDEND :{COMPANY} har i år betalat rekordbeloppet {CURRENCY_LONG} till sina aktieägare från en utdelning på {NUM}%. Städer ser fram emot extra investeringar.
+STR_TAX_DOWN :Bolagsskatteintäkterna minskade med {NUM}% från förra året.{}{}Regeringen ryktas planera nedskärningar av regionala utvecklingsmedel.
+STR_TAX_UP :Statlig skattevinst! Bolagsskatteintäkterna ökade med {COMMA}% från förra året.{}{}Nya investeringar inom offentliga sektorn och regionala utvecklingsmedel tillkännages.
+STR_PAY_TAX :{}{}Mer skatteintäkter behövs för att stödja befolkningstillväxten
+STR_PAY_DIVIDEND :{}{}Betala större aktieägarutdelningar för att få den här staden att växa
+STR_HISTORY :{DKGREEN}Beskattningsår {NUM} ->{BLACK} Betald skatt: {GOLD}{CURRENCY_LONG}{BLACK} / Betald utdelning: {GOLD}{CURRENCY_LONG}{BLACK} ({ORANGE}{NUM}%{BLACK})
+STR_HISTORY_ALT :{DKGREEN}Skatteperiod {NUM} ->{BLACK} Betald skatt: {GOLD}{CURRENCY_LONG}{BLACK} / Betald utdelning: {GOLD}{CURRENCY_LONG}{BLACK} ({ORANGE}{NUM}%{BLACK})
+STR_HISTORICAL_FINANCES :{SILVER}Företagets Redovisningar {NUM}-{NUM}

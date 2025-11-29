@@ -174,6 +174,17 @@ jungle full of overloaded trains and wheezing buses. You may need to block
 further expansion... or perhaps relocate your HQ to provide an economic
 stimulus for a neglected backwater?
 
+== Attempt to get real economy year ==
+
+This is an experimental setting which tries to align tax and dividends to
+the calendar rather than OpenTTD's internal economy time.
+
+As there is no officially supported way to get the calendar time from a
+game script, this has a high risk of breaking or not working as expected.
+
+Note that dividend calculations will still use economic quarters, so you
+may need to adjust this setting for divdends to be taken as expected.
+
 == Large Maps ==
 
 If you have over 2000 towns on your map, it can take more than a month
